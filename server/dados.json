@@ -31,14 +31,14 @@
         "id": "05",
         "nome": "Mario Game",
         "descricao": "Um dos meus primeiros jogos feito quase inteiramente em JavaScript.",
-        "link": "https://github.com/Juninm0",
+        "link": "https://github.com/Juninnn/MarioProject",
         "imagem": "./assets/img/img-sei-la.png"
     },
     {
         "id": "06",
         "nome": "Próximo Projeto",
         "descricao": "Novo projeto em desenvolvimento.",
-        "link": "https://github.com/Juninm0",
+        "link": "https://github.com/Juninnn",
         "imagem": "./assets/img/img-sei-la.png"
     }
 ]
