@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Site do Junin></title> 
+  <title>Projeto Mario - André Junior</title> 
   <link rel="stylesheet" href="./mario/css/style.css">
   <link rel="stylesheet" href="./css/style.css" />
 </head>
-<li><a href="./meusProjetos.html">
-  <buttom id="bt">Meus Projetos</buttom>
-</a></li>
-<li><a href="./index.html">
-  <buttom id="bt">Home</buttom>
-</a></li>
 
-<header><h1>projeto mario</h1></header>
-<iframe src="../public/mario/game.html" frameborder="0" height="700"
-width="800"></iframe>
 <body>
- <main>
+  <nav>
+    <ul>
+      <li><a href="./meusProjetos.html">
+        <button id="bt">Meus Projetos</button>
+      </a></li>
+      <li><a href="./index.html">
+        <button id="bt">Home</button>
+      </a></li>
+    </ul>
+  </nav>
 
- </main>
+  <header>
+    <h1>Projeto Mario</h1>
+  </header>
 
-  <footer>&COPY; todos os direitos reservador | Andre Junior 2023</footer>
+  <main>
+    <div class="game-container">
+      <iframe src="./mario/game.html" 
+              title="Jogo do Mario" 
+              width="800" 
+              height="600"
+              style="border: 2px solid #333; border-radius: 10px; max-width: 100%;">
+      </iframe>
+    </div>
+  </main>
+
+  <footer>&copy; Todos os direitos reservados | André Junior 2024</footer>
   <script src="./js/script.js"></script>
 </body>
 

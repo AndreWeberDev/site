@@ -1,49 +1,44 @@
 [
     {
         "id": "01",
-        "nome": "dino Google",
+        "nome": "Dino Google",
         "descricao": "Jogo do dinossauro feito em JS.",
         "link": "https://scratch.mit.edu/projects/711633476",
-        "imagem":"./assets/img/img-sei-la.jpg"
+        "imagem": "./assets/img/img-sei-la.png"
     },
     {
         "id": "02",
-        "nome": "gerador de cards aleatórios RPG",
+        "nome": "Gerador de Cards Aleatórios RPG",
         "descricao": "Um gerador de cards com informações de um personagem de MMORPG feito em JS, HTML e CSS.",
         "link": "https://github.com/Juninm0/rpgcard",
-        "imagem":"./assets/img/img-sei-la.jpg"
+        "imagem": "./assets/img/img-sei-la.png"
     },
     {
         "id": "03",
-        "nome": "Piskel",
-        "descricao": "Uma pequena arte de pixels que veio na cabeça...",
-
-        ".piskelfile": "...",
-        "imagem":"./assets/img/img-sei-la.jpg"
+        "nome": "Piskel Art",
+        "descricao": "Uma pequena arte de pixels criativa.",
+        "link": "https://github.com/Juninm0",
+        "imagem": "./assets/img/img-sei-la.png"
     },
-    
     {
         "id": "04",
-        "nome": "fruit ninja xineis kkk",
-        "descricao": " Um classico jogo de celular no google :) e ainda é ching xong kkkkkkkkkkk",
-
+        "nome": "Fruit Ninja",
+        "descricao": "Um clássico jogo de celular recriado para web.",
         "link": "https://juninm0.github.io/fruitninja/",
-        "imagem":"./assets/img/img-sei-la.jpg"
+        "imagem": "./assets/img/img-sei-la.png"
     },
     {
         "id": "05",
-        "nome": "Mario",
-        "descricao": " Um dos meus primeiros jogo em quase todo na liguagem JS",
+        "nome": "Mario Game",
+        "descricao": "Um dos meus primeiros jogos feito quase inteiramente em JavaScript.",
         "link": "https://github.com/Juninm0",
-         "imagem":"./assets/img/img-sei-la.jpg"
-
+        "imagem": "./assets/img/img-sei-la.png"
     },
     {
         "id": "06",
-        "nome": "Em breve",
-        "descricao": " Em breve",
+        "nome": "Próximo Projeto",
+        "descricao": "Novo projeto em desenvolvimento.",
         "link": "https://github.com/Juninm0",
-         "imagem":"./assets/img/img-sei-la.jpg"
-
+        "imagem": "./assets/img/img-sei-la.png"
     }
 ]

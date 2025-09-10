@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Site De Andre Junior</title>
+    <title>Meus Projetos - André Junior</title>
     <link rel="stylesheet" href="./css/style.css" />
 </head>
 
@@ -25,26 +25,24 @@
     </header>
 
     <main>
-        <form action="/server/dados.json" method="post">
-            <label for="id">Imagem:</label>
-           
-            <input id="imagem" name="imagem" type="file" type="image" required
-            >
+        <div class="form-container">
+            <h2>Adicionar Novo Projeto</h2>
+            <form id="form-projeto">
+                <label for="imagem">URL da Imagem:</label>
+                <input type="url" id="imagem" name="imagem" placeholder="https://exemplo.com/imagem.jpg" required>
 
-            <label for="id">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
+                <label for="nome">Nome do Projeto:</label>
+                <input type="text" id="nome" name="nome" required>
 
-            <label for="id">Descrição:</label>
-            <input type="text" id="descricao" name="descricao" required>
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="3" required></textarea>
 
-            <label for="id">Link:</label>
-            <input dropzone="text" id="link" type="link" required>
+                <label for="link">Link do Projeto:</label>
+                <input type="url" id="link" name="link" placeholder="https://github.com/usuario/projeto" required>
 
-
-            <button type="submit">Adicionar Projeto(s)</button>
-            
-
-        </form>
+                <button type="submit">Adicionar Projeto</button>
+            </form>
+        </div>
 
 
         <table id="tabela-projetos">
@@ -73,7 +71,7 @@
 
     </main>
 
-    <footer>&COPY; todos os direitos reservador | Andre Junior 2023</footer>
+    <footer>&copy; Todos os direitos reservados | André Junior 2024</footer>
     <script src="./js/script.js"></script>
 </body>
 

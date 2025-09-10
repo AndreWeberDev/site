@@ -45,26 +45,117 @@ main {
   background-color: rgba(17, 17, 51, 0.6);
   border-radius: 15px;
 }
-#bt{
-color:rgb(0, 0, 0);
-font-weight: bolder;
-background-color: floralwhite;
-display: flex;
-
-
+#bt {
+  color: rgb(0, 0, 0);
+  font-weight: bolder;
+  background-color: floralwhite;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
-table{
-width: 100%;
-border-collapse: collapse;
-margin: 20px 0;
-font-size: 16px;
 
+#bt:hover {
+  background-color: #f0f0f0;
 }
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+nav li {
+  margin: 0;
+}
+
+nav a {
+  text-decoration: none;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 th, td {
-border: 1px solid #232323;
-padding: 8px;
-text-align: left;
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
 
+th {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-weight: bold;
+}
+
+td {
+  color: #333;
+}
+
+td a {
+  color: #0066cc;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+td a:hover {
+  text-decoration: underline;
+}
+
+.form-container {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.form-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-container label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-container input,
+.form-container textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-container button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
 }
 main img {                                                                                                                                        
   width: 20%;
@@ -119,9 +210,36 @@ main section.social {
 }
 main section.social img {
   padding: 10px;
-  size: 20px;
-  display: flex;
- 
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.cards {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.cards:hover {
+  transform: translateY(-5px);
+}
+
+.btncard {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.btncard:hover {
+  background-color: #0056b3;
 }
 
 footer {
