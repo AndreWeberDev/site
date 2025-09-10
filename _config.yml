@@ -1,0 +1,31 @@
+title: "Portfólio - André Junior"
+description: "Desenvolvedor em formação - Projetos e experiências"
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: jekyll-theme-primer
+
+# Exclude files from processing
+exclude:
+  - server/
+  - fruitninja-master/
+  - changelog/
+  - node_modules/
+  - package*.json
+  - README.md
+  - CHANGELOG.md
+
+# Include files
+include:
+  - public/
+
+# Collections
+collections_dir: public
+
+# Plugins
+plugins:
+  - jekyll-github-metadata
+  - jekyll-seo-tag
