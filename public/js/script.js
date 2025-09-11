@@ -16,9 +16,9 @@ const projetos = [
     },
     {
         "id": "03",
-        "nome": "Piskel Art",
+        "nome": "Mario V2",
         "descricao": "Uma pequena arte de pixels criativa.",
-        "link": "https://github.com/Juninm0",
+        "link": "https://juninnn.github.io/portifolio/public/index.html",
         "imagem": "./assets/img/img-sei-la.png"
     },
     {
