@@ -22,10 +22,28 @@ class AuthSystem {
     }
   }
 
+  validatePassword(password) {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasSpecialChar = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+    const minLength = password.length >= 8;
+    
+    if (!minLength) {
+      throw new Error('Senha deve ter pelo menos 8 caracteres');
+    }
+    if (!hasUpperCase) {
+      throw new Error('Senha deve ter pelo menos 1 letra maiúscula');
+    }
+    if (!hasSpecialChar) {
+      throw new Error('Senha deve ter pelo menos 1 número ou símbolo');
+    }
+  }
+
   register(name, email, password) {
     if (this.users.find(user => user.email === email)) {
       throw new Error('Email já cadastrado');
     }
+
+    this.validatePassword(password);
 
     const user = {
       id: Date.now(),
@@ -97,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
         const user = auth.login(email, password);
+        refreshSidebar();
         if (user.isAdmin) {
           window.location.href = 'admin.html';
         } else {
@@ -164,6 +183,7 @@ function showSuccess(message) {
 
 function logout() {
   auth.logout();
+  refreshSidebar();
   window.location.href = 'index.html';
 }
 

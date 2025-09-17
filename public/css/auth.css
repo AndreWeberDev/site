@@ -78,3 +78,37 @@ body {
   text-align: center;
   margin-bottom: 1rem;
 }
+
+.password-hint {
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+  .auth-container {
+    margin: 1rem;
+    padding: 1.5rem;
+    max-width: none;
+  }
+  
+  .auth-form h2 {
+    font-size: 1.5rem;
+  }
+  
+  .auth-form input {
+    padding: 14px;
+    font-size: 16px;
+  }
+  
+  .auth-form button {
+    padding: 14px;
+    font-size: 16px;
+  }
+  
+  .password-hint {
+    font-size: 11px;
+  }
+}

@@ -499,6 +499,25 @@ main section.social {
   background: linear-gradient(135deg, #34a853, #66bb6a);
 }
 
+/* Estilos para páginas protegidas */
+.login-required {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(138, 180, 248, 0.2);
+}
+
+.login-required h2 {
+  color: #8ab4f8;
+  margin-bottom: 15px;
+}
+
+.login-required p {
+  color: #9aa0a6;
+  margin-bottom: 20px;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .projects-grid {
@@ -516,6 +535,15 @@ main section.social {
   
   .social-title {
     font-size: 1.5rem;
+  }
+  
+  .login-required {
+    padding: 30px 15px;
+    margin: 10px;
+  }
+  
+  .login-required h2 {
+    font-size: 1.3rem;
   }
 }
 
@@ -785,7 +813,15 @@ footer {
   
   .intro-card,
   .interests-card,
-  .journey-card {
+  .journey-card,
+  .goals-card,
+  .social-card {
     padding: 20px;
+  }
+  
+  .btncard {
+    padding: 14px 20px;
+    font-size: 16px;
+    min-width: 140px;
   }
 }

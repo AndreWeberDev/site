@@ -6,6 +6,28 @@
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+/* Responsividade para admin */
+@media (max-width: 768px) {
+  .admin-section {
+    padding: 1.5rem;
+    margin: 10px;
+  }
+  
+  .project-form {
+    padding: 1rem;
+  }
+  
+  .project-form input,
+  .project-form textarea {
+    padding: 12px;
+    font-size: 16px;
+  }
+  
+  .project-item {
+    padding: 0.8rem;
+  }
+}
+
 .project-form {
   background: #f8f9fa;
   padding: 1.5rem;
