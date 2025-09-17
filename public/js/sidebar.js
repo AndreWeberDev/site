@@ -63,6 +63,14 @@ function updateSidebar() {
 
     sidebarNav.innerHTML = menuItems;
     
+    // Adicionar avatar se logado
+    if (isLoggedIn && auth.currentUser.avatar) {
+      const avatarSection = document.createElement('div');
+      avatarSection.className = 'sidebar-avatar';
+      avatarSection.innerHTML = `<img src="${auth.currentUser.avatar}" alt="Avatar">`;
+      sidebarNav.appendChild(avatarSection);
+    }
+    
     // Animação de entrada
     sidebarNav.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     sidebarNav.style.opacity = '1';

@@ -59,8 +59,17 @@ function loadUserInfo() {
   
   // Carregar avatar
   const avatarImg = document.getElementById('avatarImg');
-  if (avatarImg && user.avatar) {
-    avatarImg.src = user.avatar;
+  if (avatarImg) {
+    avatarImg.src = user.avatar || './assets/img/default-avatar.png';
+    // Suporte para GIFs animados
+    if (user.avatarType === 'image/gif') {
+      avatarImg.style.imageRendering = 'auto';
+    }
+  }
+  
+  // Atualizar avatar no sidebar
+  if (user.avatar) {
+    updateSidebarAvatar(user.avatar);
   }
   
   // Preencher formulário
@@ -87,20 +96,58 @@ function showTab(tabName) {
   document.getElementById(tabName + 'Tab').style.display = 'block';
 }
 
-function handleAvatarUpload(event) {
+async function handleAvatarUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
   
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const avatarImg = document.getElementById('avatarImg');
-    avatarImg.src = e.target.result;
+  const avatarImg = document.getElementById('avatarImg');
+  const originalSrc = avatarImg.src;
+  
+  try {
+    // Validar arquivo
+    ImageProcessor.validateFile(file);
     
-    // Salvar avatar no perfil
-    auth.updateUserProfile(auth.currentUser.id, { avatar: e.target.result });
-    showSuccess('Avatar atualizado com sucesso!');
-  };
-  reader.readAsDataURL(file);
+    // Mostrar loading
+    avatarImg.style.opacity = '0.5';
+    
+    // Processar imagem
+    const processedImage = await ImageProcessor.processImage(file);
+    
+    // Atualizar avatar
+    avatarImg.src = processedImage;
+    avatarImg.style.opacity = '1';
+    
+    // Salvar no perfil
+    auth.updateUserProfile(auth.currentUser.id, { 
+      avatar: processedImage,
+      avatarType: file.type
+    });
+    
+    showSuccess(`Avatar ${file.type === 'image/gif' ? 'GIF' : ''} atualizado com sucesso!`);
+    updateSidebarAvatar(processedImage);
+    
+  } catch (error) {
+    avatarImg.src = originalSrc;
+    avatarImg.style.opacity = '1';
+    showError(error.message);
+  }
+}
+
+// Atualizar avatar no sidebar
+function updateSidebarAvatar(avatarUrl) {
+  const sidebarHeader = document.querySelector('.sidebar-header');
+  if (!sidebarHeader || !auth.isLoggedIn()) return;
+  
+  let avatarElement = sidebarHeader.querySelector('.sidebar-avatar');
+  if (!avatarElement) {
+    avatarElement = document.createElement('div');
+    avatarElement.className = 'sidebar-avatar';
+    avatarElement.innerHTML = '<img src="" alt="Avatar">';
+    sidebarHeader.appendChild(avatarElement);
+  }
+  
+  const img = avatarElement.querySelector('img');
+  img.src = avatarUrl;
 }
 
 function handleChangePassword(e) {
