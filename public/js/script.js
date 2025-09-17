@@ -44,25 +44,64 @@ const projetos = [
     }
 ];
 
-// Função para carregar projetos na tabela
+// Função para carregar projetos no grid
 function carregarProjetos() {
-    const tabelaProjetos = document.getElementById('tabela-projetos');
-    if (!tabelaProjetos) return;
+    const projectsGrid = document.getElementById('projects-grid');
+    if (!projectsGrid) return;
     
-    const tbody = tabelaProjetos.getElementsByTagName('tbody')[0];
-    tbody.innerHTML = ''; // Limpa a tabela
+    projectsGrid.innerHTML = ''; // Limpa o grid
     
     projetos.forEach(projeto => {
-        const linha = document.createElement('tr');
-        linha.innerHTML = `
-            <td>${projeto.id}</td>
-            <td><img src="${projeto.imagem}" alt="${projeto.nome}" style="width: 50px; height: 50px; object-fit: cover;"></td>
-            <td>${projeto.nome}</td>
-            <td>${projeto.descricao}</td>
-            <td><a href="${projeto.link}" target="_blank">${projeto.link}</a></td>
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        
+        // Define tecnologias baseado no projeto
+        const tecnologias = getTecnologias(projeto.nome);
+        
+        card.innerHTML = `
+            <div class="card-image">
+                <img src="${projeto.imagem}" alt="${projeto.nome}">
+                <div class="card-overlay">
+                    <span class="project-id">#${projeto.id}</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <h3 class="project-title">${projeto.nome}</h3>
+                <p class="project-description">${projeto.descricao}</p>
+                <div class="project-tags">
+                    ${tecnologias.map(tech => `<span class="tag">${tech}</span>`).join('')}
+                </div>
+                <div class="card-actions">
+                    <a href="${projeto.link}" target="_blank" class="btn-primary">
+                        <i class="icon-external"></i> Ver Projeto
+                    </a>
+                    <button class="btn-secondary" onclick="editarProjeto('${projeto.id}')">
+                        <i class="icon-edit"></i> Editar
+                    </button>
+                </div>
+            </div>
         `;
-        tbody.appendChild(linha);
+        
+        projectsGrid.appendChild(card);
     });
+}
+
+// Função para definir tecnologias baseado no nome do projeto
+function getTecnologias(nome) {
+    const tech = {
+        'Dino Google': ['JavaScript', 'HTML5'],
+        'Gerador de Cards Aleatórios RPG': ['JavaScript', 'HTML5', 'CSS3'],
+        'Piskel Art': ['Pixel Art', 'Design'],
+        'Fruit Ninja': ['JavaScript', 'Canvas'],
+        'Mario Game': ['JavaScript', 'Game Dev'],
+        'Próximo Projeto': ['Em breve']
+    };
+    return tech[nome] || ['Web'];
+}
+
+// Função para editar projeto (placeholder)
+function editarProjeto(id) {
+    alert(`Editar projeto ${id} - Funcionalidade em desenvolvimento`);
 }
 
 // Função para adicionar novo projeto
@@ -82,7 +121,26 @@ function adicionarProjeto(event) {
     carregarProjetos();
     form.reset();
     
-    alert('Projeto adicionado com sucesso!');
+    // Animação de sucesso
+    mostrarNotificacao('Projeto adicionado com sucesso!', 'success');
+}
+
+// Função para mostrar notificações
+function mostrarNotificacao(mensagem, tipo) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${tipo}`;
+    notification.textContent = mensagem;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 }
 
 // Inicialização quando a página carrega
