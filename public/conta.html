@@ -26,18 +26,44 @@
     <main>
       <div class="auth-container">
         <div class="auth-form">
-          <div class="user-info" id="userInfo">
-            <!-- Informações do usuário serão carregadas aqui -->
+          <div class="profile-section-account">
+            <div class="profile-avatar" id="profileAvatar">
+              <img src="./assets/img/default-avatar.png" alt="Avatar" id="avatarImg">
+              <button class="avatar-upload" onclick="document.getElementById('avatarInput').click()">📷</button>
+              <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="handleAvatarUpload(event)">
+            </div>
+            
+            <div class="user-info" id="userInfo">
+              <!-- Informações do usuário serão carregadas aqui -->
+            </div>
           </div>
           
-          <h3>Alterar Senha</h3>
-          <form id="changePasswordForm">
-            <input type="password" id="currentPassword" placeholder="Senha atual" required>
-            <input type="password" id="newPassword" placeholder="Nova senha" required>
-            <small class="password-hint">Mínimo 8 caracteres, 1 maiúscula e 1 número/símbolo</small>
-            <input type="password" id="confirmNewPassword" placeholder="Confirmar nova senha" required>
-            <button type="submit">Alterar Senha</button>
-          </form>
+          <div class="account-tabs">
+            <button class="tab-btn active" onclick="showTab('profile')">Perfil</button>
+            <button class="tab-btn" onclick="showTab('security')">Segurança</button>
+          </div>
+          
+          <div class="tab-content" id="profileTab">
+            <h3>Informações do Perfil</h3>
+            <form id="profileForm">
+              <input type="text" id="displayName" placeholder="Nome de exibição" required>
+              <input type="text" id="username" placeholder="Nome de usuário" required>
+              <input type="text" id="nickname" placeholder="Apelido">
+              <textarea id="bio" placeholder="Biografia" rows="3"></textarea>
+              <button type="submit">Salvar Perfil</button>
+            </form>
+          </div>
+          
+          <div class="tab-content" id="securityTab" style="display: none;">
+            <h3>Alterar Senha</h3>
+            <form id="changePasswordForm">
+              <input type="password" id="currentPassword" placeholder="Senha atual" required>
+              <input type="password" id="newPassword" placeholder="Nova senha" required>
+              <small class="password-hint">Mínimo 8 caracteres, 1 maiúscula e 1 número/símbolo</small>
+              <input type="password" id="confirmNewPassword" placeholder="Confirmar nova senha" required>
+              <button type="submit">Alterar Senha</button>
+            </form>
+          </div>
         </div>
       </div>
     </main>

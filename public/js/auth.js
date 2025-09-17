@@ -38,6 +38,24 @@ class AuthSystem {
     }
   }
 
+  updateUserProfile(userId, profileData) {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const userIndex = users.findIndex(u => u.id === userId);
+    
+    if (userIndex !== -1) {
+      users[userIndex] = { ...users[userIndex], ...profileData };
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      if (this.currentUser && this.currentUser.id === userId) {
+        this.currentUser = { ...this.currentUser, ...profileData };
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+      }
+      
+      return users[userIndex];
+    }
+    return null;
+  }
+
   register(name, email, password) {
     if (this.users.find(user => user.email === email)) {
       throw new Error('Email já cadastrado');
@@ -115,12 +133,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
         const user = auth.login(email, password);
-        refreshSidebar();
-        if (user.isAdmin) {
-          window.location.href = 'admin.html';
-        } else {
-          window.location.href = 'contatos.html';
-        }
+        
+        // Animação de sucesso
+        const form = document.querySelector('.auth-form');
+        form.style.transform = 'scale(1.05)';
+        form.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        
+        setTimeout(() => {
+          refreshSidebar();
+          if (user.isAdmin) {
+            handleNavClick({preventDefault: () => {}}, 'admin.html');
+          } else {
+            handleNavClick({preventDefault: () => {}}, 'contatos.html');
+          }
+        }, 800);
       } catch (error) {
         showError(error.message);
       }
@@ -142,9 +168,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
         auth.register(name, email, password);
+        
+        // Animação de sucesso
+        const form = document.querySelector('.auth-form');
+        form.style.transform = 'scale(1.05)';
+        form.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        
         showSuccess('Cadastro realizado com sucesso!');
         setTimeout(() => {
-          window.location.href = 'login.html';
+          handleNavClick({preventDefault: () => {}}, 'login.html');
         }, 2000);
       } catch (error) {
         showError(error.message);
@@ -182,9 +214,18 @@ function showSuccess(message) {
 }
 
 function logout() {
-  auth.logout();
-  refreshSidebar();
-  window.location.href = 'index.html';
+  // Animação de logout
+  const mainContent = document.querySelector('.main-content');
+  if (mainContent) {
+    mainContent.style.transform = 'scale(0.95)';
+    mainContent.style.opacity = '0.7';
+  }
+  
+  setTimeout(() => {
+    auth.logout();
+    refreshSidebar();
+    handleNavClick({preventDefault: () => {}}, 'index.html');
+  }, 300);
 }
 
 // Verificar autenticação em páginas protegidas

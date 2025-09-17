@@ -547,6 +547,48 @@ main section.social {
   }
 }
 
+/* Botão Toggle Sidebar */
+.sidebar-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  background: rgba(26, 26, 46, 0.9);
+  border: 1px solid rgba(138, 180, 248, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-toggle:hover {
+  background: rgba(138, 180, 248, 0.2);
+  transform: scale(1.05);
+}
+
+.hamburger {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #8ab4f8;
+  margin: 4px 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 2px;
+}
+
+.sidebar-toggle.active .hamburger:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.sidebar-toggle.active .hamburger:nth-child(2) {
+  opacity: 0;
+}
+
+.sidebar-toggle.active .hamburger:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
 /* Menu Lateral */
 .sidebar {
   position: fixed;
@@ -557,6 +599,11 @@ main section.social {
   background: linear-gradient(180deg, #0f0f23, #1a1a2e);
   border-right: 1px solid rgba(138, 180, 248, 0.2);
   z-index: 1000;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.sidebar.collapsed {
+  transform: translateX(-250px);
 }
 
 .sidebar-header {
@@ -616,6 +663,11 @@ main section.social {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: margin-left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.main-content.expanded {
+  margin-left: 0;
 }
 
 /* Ajustes para o conteudo principal */
