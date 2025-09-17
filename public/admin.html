@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Site do Junin</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Admin</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="./index.html" class="nav-item">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">Home</span>
+      </a>
+      <a href="./admin.html" class="nav-item active">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-text">Admin</span>
+      </a>
+      <a href="#" class="nav-item" onclick="logout()">
+        <span class="nav-icon">🚪</span>
+        <span class="nav-text">Sair</span>
+      </a>
+    </nav>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h1>Painel Administrativo</h1>
+      <span id="userInfo"></span>
+    </header>
+
+    <main>
+      <div class="admin-section">
+        <h2>Gerenciar Projetos</h2>
+        
+        <div class="project-form">
+          <h3>Adicionar Projeto</h3>
+          <form id="addProjectForm">
+            <input type="text" id="projectTitle" placeholder="Título do projeto" required>
+            <textarea id="projectDescription" placeholder="Descrição do projeto" required></textarea>
+            <input type="url" id="projectLink" placeholder="Link do projeto">
+            <input type="text" id="projectImage" placeholder="URL da imagem">
+            <button type="submit">Adicionar Projeto</button>
+          </form>
+        </div>
+
+        <div class="projects-list">
+          <h3>Projetos Existentes</h3>
+          <div id="projectsList"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="./js/auth.js"></script>
+  <script src="./js/admin.js"></script>
+</body>
+</html>

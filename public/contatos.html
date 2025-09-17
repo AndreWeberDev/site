@@ -26,6 +26,14 @@
                 <span class="nav-icon">📞</span>
                 <span class="nav-text">Contatos</span>
             </a>
+            <a href="./login.html" class="nav-item">
+                <span class="nav-icon">🔑</span>
+                <span class="nav-text">Login</span>
+            </a>
+            <a href="./register.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Cadastro</span>
+            </a>
         </nav>
     </div>
 
@@ -35,6 +43,13 @@
         </header>
 
         <main>
+            <div class="login-required" id="loginRequired" style="display: none;">
+                <h2>Acesso Restrito</h2>
+                <p>Você precisa fazer login para entrar em contato.</p>
+                <a href="login.html" class="btncard">Fazer Login</a>
+            </div>
+            
+            <div class="contacts-content" id="contactsContent" style="display: none;">
             <section class="social">
                 <div class="cards">
                     <div class="card-icon instagram-icon">
@@ -83,16 +98,18 @@
                     </div>
                     <h3>WhatsApp</h3>
                     <p>Contato direto</p>
-                    <a href="https://wa.me/5521999999999" target="_blank" class="btncard">
+                    <a href="https://wa.me/5521972503731" target="_blank" class="btncard">
                         Conversar
                     </a>
                 </div>
             </section>
+            </div>
         </main>
 
-        <footer>&copy; Todos os direitos reservados | André Junior 2024</footer>
+        <footer>&copy; Todos os direitos reservados | André Junior 2025</footer>
     </div>
 
+    <script src="./js/auth.js"></script>
     <script src="./js/script.js"></script>
 </body>
 

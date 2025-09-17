@@ -26,6 +26,14 @@
                 <span class="nav-icon">📞</span>
                 <span class="nav-text">Contatos</span>
             </a>
+            <a href="./login.html" class="nav-item">
+                <span class="nav-icon">🔑</span>
+                <span class="nav-text">Login</span>
+            </a>
+            <a href="./register.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Cadastro</span>
+            </a>
         </nav>
     </div>
 
@@ -35,35 +43,23 @@
         </header>
 
         <main>
-        <div class="form-container">
-            <h2>Adicionar Novo Projeto</h2>
-            <form id="form-projeto">
-                <label for="imagem">URL da Imagem:</label>
-                <input type="url" id="imagem" name="imagem" placeholder="https://exemplo.com/imagem.jpg" required>
+            <div class="login-required" id="loginRequired" style="display: none;">
+                <h2>Acesso Restrito</h2>
+                <p>Você precisa fazer login para ver os projetos.</p>
+                <a href="login.html" class="btncard">Fazer Login</a>
+            </div>
+            
+            <div class="projects-content" id="projectsContent">
+                <div class="projects-grid" id="projects-grid">
+                    <!-- Cards serão inseridos aqui pelo JavaScript -->
+                </div>
+            </div>
+        </main>
 
-                <label for="nome">Nome do Projeto:</label>
-                <input type="text" id="nome" name="nome" required>
-
-                <label for="descricao">Descrição:</label>
-                <textarea id="descricao" name="descricao" rows="3" required></textarea>
-
-                <label for="link">Link do Projeto:</label>
-                <input type="url" id="link" name="link" placeholder="https://github.com/usuario/projeto" required>
-
-                <button type="submit">Adicionar Projeto</button>
-            </form>
-        </div>
-
-
-        <div class="projects-grid" id="projects-grid">
-            <!-- Cards serão inseridos aqui pelo JavaScript -->
-        </div>
-
-    </main>
-
-        <footer>&copy; Todos os direitos reservados | André Junior 2024</footer>
+        <footer>&copy; Todos os direitos reservados | André Junior 2025</footer>
     </div>
     
+    <script src="./js/auth.js"></script>
     <script src="./js/script.js"></script>
 </body>
 

@@ -44,18 +44,17 @@ const projetos = [
     }
 ];
 
-// Função para carregar projetos no grid
+// Função para carregar projetos no grid (página inicial)
 function carregarProjetos() {
     const projectsGrid = document.getElementById('projects-grid');
     if (!projectsGrid) return;
     
-    projectsGrid.innerHTML = ''; // Limpa o grid
+    projectsGrid.innerHTML = '';
     
     projetos.forEach(projeto => {
         const card = document.createElement('div');
         card.className = 'project-card';
         
-        // Define tecnologias baseado no projeto
         const tecnologias = getTecnologias(projeto.nome);
         
         card.innerHTML = `
@@ -73,11 +72,8 @@ function carregarProjetos() {
                 </div>
                 <div class="card-actions">
                     <a href="${projeto.link}" target="_blank" class="btn-primary">
-                        <i class="icon-external"></i> Ver Projeto
+                        Ver Projeto
                     </a>
-                    <button class="btn-secondary" onclick="editarProjeto('${projeto.id}')">
-                        <i class="icon-edit"></i> Editar
-                    </button>
                 </div>
             </div>
         `;
@@ -151,10 +147,87 @@ function mostrarNotificacao(mensagem, tipo) {
 
 // Inicialização quando a página carrega
 document.addEventListener('DOMContentLoaded', function() {
-    carregarProjetos();
+    // Verificar autenticação nas páginas protegidas
+    if (window.location.pathname.includes('contatos.html')) {
+        checkContactsAuth();
+    } else if (window.location.pathname.includes('meusProjetos.html')) {
+        checkProjectsAuth();
+    } else {
+        carregarProjetos();
+    }
     
     const formProjeto = document.getElementById('form-projeto');
     if (formProjeto) {
         formProjeto.addEventListener('submit', adicionarProjeto);
     }
 });
+
+// Verificar autenticação para contatos
+function checkContactsAuth() {
+    const loginRequired = document.getElementById('loginRequired');
+    const contactsContent = document.getElementById('contactsContent');
+    
+    if (auth.isLoggedIn()) {
+        loginRequired.style.display = 'none';
+        contactsContent.style.display = 'block';
+    } else {
+        loginRequired.style.display = 'block';
+        contactsContent.style.display = 'none';
+    }
+}
+
+// Verificar autenticação para projetos
+function checkProjectsAuth() {
+    const loginRequired = document.getElementById('loginRequired');
+    const projectsContent = document.getElementById('projectsContent');
+    
+    if (auth.isLoggedIn()) {
+        loginRequired.style.display = 'none';
+        projectsContent.style.display = 'block';
+        loadProjectsFromStorage();
+    } else {
+        loginRequired.style.display = 'block';
+        projectsContent.style.display = 'none';
+    }
+}
+
+// Carregar projetos do localStorage (para usuários logados)
+function loadProjectsFromStorage() {
+    const projectsGrid = document.getElementById('projects-grid');
+    if (!projectsGrid) return;
+    
+    const storedProjects = JSON.parse(localStorage.getItem('projects')) || [];
+    const allProjects = [...projetos, ...storedProjects];
+    
+    projectsGrid.innerHTML = '';
+    
+    allProjects.forEach(projeto => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        
+        const tecnologias = getTecnologias(projeto.nome || projeto.title);
+        
+        card.innerHTML = `
+            <div class="card-image">
+                <img src="${projeto.imagem || projeto.image}" alt="${projeto.nome || projeto.title}">
+                <div class="card-overlay">
+                    <span class="project-id">#${projeto.id}</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <h3 class="project-title">${projeto.nome || projeto.title}</h3>
+                <p class="project-description">${projeto.descricao || projeto.description}</p>
+                <div class="project-tags">
+                    ${tecnologias.map(tech => `<span class="tag">${tech}</span>`).join('')}
+                </div>
+                <div class="card-actions">
+                    <a href="${projeto.link}" target="_blank" class="btn-primary">
+                        Ver Projeto
+                    </a>
+                </div>
+            </div>
+        `;
+        
+        projectsGrid.appendChild(card);
+    });
+}
