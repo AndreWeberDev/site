@@ -9,16 +9,27 @@
 </head>
 
 <body>
-  <nav>
-    <ul>
-      <li><a href="./meusProjetos.html">
-          <button id="bt">Meus Projetos</button>
-        </a></li>
-      <li><a href="./projetomario.html">
-          <button id="bt">Amostra de meu Minigame</button>
-        </a></li>
-    </ul>
-  </nav>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Menu</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="./index.html" class="nav-item active">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">Home</span>
+      </a>
+      <a href="./meusProjetos.html" class="nav-item">
+        <span class="nav-icon">💼</span>
+        <span class="nav-text">Projetos</span>
+      </a>
+      <a href="./contatos.html" class="nav-item">
+        <span class="nav-icon">📞</span>
+        <span class="nav-text">Contatos</span>
+      </a>
+    </nav>
+  </div>
+
+  <div class="main-content">
   <header>
 
     <h1>Andre Junior, Gostos, Vida e Futuro</h1>
@@ -26,86 +37,42 @@
   </header>
 
   <main>
-    <section class="sobre-mim">
-      <img src="./assets/img/luke-Junin.png" alt="Foto do André Junior" />
-      Sobre André Junior e seus Gostos: Sou um programador em aprendizagem, me
-      chamo André, os mais próximos de mim de chamam de Junin, tenho 17
-      anos, e sempre gostei de tecnologia! || Gosto de gatos, jogos, adoro
-      comer e dormir, programar e DESENHAR! Quer ver meus desenhos? || veja
-      meu Instagram: @arts.andy_studio 
-    </section>
-
-    <section class="ida">
-      <img src="./assets/img/transferir (1).png" alt="Tecnologia" />
-
-      Desde pequeno, sempre quis aprender mais sobre tecnologia, mas a
-      tecnologia que tinha era somente os celulares dos meus pais, e dai, eu
-      acabei sem recursos. Porém no meu aniversário de 12 anos foi ganhei meu
-      primeiro computador do meu pai, no meio da pandeia inclusive, eu acabei
-      querendo fazer programação, com meus interesses de trabalhar em algo que
-      eu goste, pois, quem quer trabalhar com o que não gosta? Aí acabei
-      fazendo o curso da Pós-Rio Poliotécnica(recomendo, são muito bons no que
-      fazem!), e acabei me achando no que gosto e no que realmente quero
-      Trabalhar quando for mais velho: PROGRAMAÇÃO! Eu comecei em abril do ano
-      passado a cursar, e completei nesse ano a parte inicial do curso, agora
-      estou no meio da intermediara, e estou adorando! Pretendo trabalhar na
-      alterdata em Teresópolis, ou ser um Programador De Jogos(Estou
-      aprendendo, mas se já criei este site e jogos que estão no meu github,
-      inclusive, já meio que sou um programador na minha opinião)!
-    </section>
-
-    <section class="social">
-      <h2 class="social-title">Meus Contatos</h2>
-      
-      <div class="cards">
-        <div class="card-icon">
-          <img src="./assets/img/it.png" alt="Instagram" />
-        </div>
-        <h3>Instagram</h3>
-        <p>Arte e criações</p>
-        <a href="https://www.instagram.com/arts.andy_studio/" target="_blank" class="btncard">
-          Seguir
-        </a>
+    <div class="profile-section">
+      <div class="profile-image">
+        <img src="./assets/img/transferir (1).png" alt="André Junior" />
       </div>
       
-      <div class="cards">
-        <div class="card-icon">
-          <img src="./assets/img/github-sign.png" alt="GitHub" />
+      <div class="profile-content">
+        <div class="intro-card">
+          <h2>Sobre mim</h2>
+          <p>Olá! Sou o André Junior, mas pode me chamar de Junin. Tenho 17 anos e sou um desenvolvedor em formação apaixonado por tecnologia.</p>
         </div>
-        <h3>GitHub</h3>
-        <p>Meus projetos</p>
-        <a href="https://github.com/Juninnn" target="_blank" class="btncard">
-          Ver Código
-        </a>
-      </div>
-      
-      <div class="cards">
-        <div class="card-icon">
-          <img src="./assets/img/dc.png" alt="Discord" />
+        
+        <div class="interests-card">
+          <h3>Meus interesses</h3>
+          <div class="interests-grid">
+            <span class="interest-tag">Programação</span>
+            <span class="interest-tag">Jogos</span>
+            <span class="interest-tag">Desenho</span>
+            <span class="interest-tag">Tecnologia</span>
+          </div>
         </div>
-        <h3>Discord</h3>
-        <p>Servidor da comunidade</p>
-        <a href="https://discord.gg/6saHthJSHa" target="_blank" class="btncard">
-          Entrar
-        </a>
-      </div>
-      
-      <div class="cards">
-        <div class="card-icon whatsapp-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-          </svg>
+        
+        <div class="journey-card">
+          <h3>Minha jornada</h3>
+          <p>Minha paixão por tecnologia começou cedo, mas foi aos 12 anos, quando ganhei meu primeiro computador, que tudo mudou. Durante a pandemia, descobri a programação e me apaixonei.</p>
+          
+          <p>Atualmente estudo na Pós-Rio Poliotécnica, onde estou no nível intermediário. Meu objetivo é trabalhar como desenvolvedor, seja na Alterdata em Teresópolis ou como programador de jogos.</p>
+          
+          <p>Já criei vários projetos, incluindo este portfólio e jogos que você pode conferir na seção de projetos!</p>
         </div>
-        <h3>WhatsApp</h3>
-        <p>Contato direto</p>
-        <a href="https://wa.me/5521999999999" target="_blank" class="btncard">
-          Conversar
-        </a>
       </div>
-    </section>
+    </div>
   </main>
 
-  <footer>&copy; Todos os direitos reservados | André Junior 2024</footer>
+    <footer>&copy; Todos os direitos reservados | André Junior 2024</footer>
+  </div>
+  
   <script src="./js/script.js"></script>
 </body>
 

@@ -5,42 +5,42 @@ const projetos = [
         "nome": "Dino Google",
         "descricao": "Jogo do dinossauro feito em JS.",
         "link": "https://scratch.mit.edu/projects/711633476",
-        "imagem": "./assets/img/img-sei-la.png"
+        "imagem": "./assets/img/IconeJogos/controlador.png"
     },
     {
         "id": "02",
         "nome": "Gerador de Cards Aleatórios RPG",
         "descricao": "Um gerador de cards com informações de um personagem de MMORPG feito em JS, HTML e CSS.",
         "link": "https://github.com/Juninm0/rpgcard",
-        "imagem": "./assets/img/img-sei-la.png"
+        "imagem": "./assets/img/IconeJogos/controle-de-jogo.png"
     },
     {
         "id": "03",
         "nome": "Mario V2",
         "descricao": "Uma pequena arte de pixels criativa.",
         "link": "https://juninnn.github.io/portifolio/public/index.html",
-        "imagem": "./assets/img/img-sei-la.png"
+        "imagem": "./assets/img/IconeJogos/controle-de-video-game (1).png"
     },
     {
         "id": "04",
         "nome": "Fruit Ninja",
         "descricao": "Um clássico jogo de celular recriado para web.",
         "link": "https://juninm0.github.io/fruitninja/",
-        "imagem": "./assets/img/img-sei-la.png"
+        "imagem": "./assets/img/IconeJogos/controlador.png"
     },
     {
         "id": "05",
         "nome": "Mario Game",
         "descricao": "Um dos meus primeiros jogos feito quase inteiramente em JavaScript.",
         "link": "https://github.com/Juninm0",
-        "imagem": "./assets/img/img-sei-la.png"
+        "imagem": "./assets/img/IconeJogos/controle-de-jogo.png"
     },
     {
         "id": "06",
         "nome": "Próximo Projeto",
         "descricao": "Novo projeto em desenvolvimento.",
         "link": "https://github.com/Juninm0",
-        "imagem": "./assets/img/img-sei-la.png"
+        "imagem": "./assets/img/IconeJogos/controle-de-video-game (1).png"
     }
 ];
 
@@ -109,12 +109,18 @@ function adicionarProjeto(event) {
     event.preventDefault();
     
     const form = event.target;
+    const icones = [
+        "./assets/img/IconeJogos/controlador.png",
+        "./assets/img/IconeJogos/controle-de-jogo.png",
+        "./assets/img/IconeJogos/controle-de-video-game (1).png"
+    ];
+    
     const novoProjeto = {
         id: String(projetos.length + 1).padStart(2, '0'),
         nome: form.nome.value,
         descricao: form.descricao.value,
         link: form.link.value,
-        imagem: form.imagem.value
+        imagem: form.imagem.value || icones[projetos.length % 3]
     };
     
     projetos.push(novoProjeto);

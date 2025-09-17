@@ -283,16 +283,18 @@ main section.social {
   transform: scale(1.1);
 }
 
-.card-icon img {
-  width: 45px;
-  height: 45px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
+.card-icon svg {
+  width: 50px;
+  height: 50px;
+  color: white;
 }
 
+.instagram-icon svg,
+.github-icon svg,
+.discord-icon svg,
 .whatsapp-icon svg {
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   color: white;
 }
 
@@ -517,6 +519,109 @@ main section.social {
   }
 }
 
+/* Menu Lateral */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(180deg, #0f0f23, #1a1a2e);
+  border-right: 1px solid rgba(138, 180, 248, 0.2);
+  z-index: 1000;
+}
+
+.sidebar-header {
+  padding: 30px 20px;
+  border-bottom: 1px solid rgba(138, 180, 248, 0.2);
+}
+
+.sidebar-header h2 {
+  color: #8ab4f8;
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin: 0;
+  text-align: center;
+}
+
+.sidebar-nav {
+  padding: 20px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  color: #9aa0a6;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover {
+  background: rgba(138, 180, 248, 0.1);
+  color: #8ab4f8;
+  border-left-color: #8ab4f8;
+}
+
+.nav-item.active {
+  background: rgba(138, 180, 248, 0.2);
+  color: #8ab4f8;
+  border-left-color: #8ab4f8;
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  margin-right: 15px;
+  width: 20px;
+  text-align: center;
+}
+
+.nav-text {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* Layout Principal */
+.main-content {
+  margin-left: 250px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ajustes para o conteudo principal */
+body {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  min-height: 100vh;
+  color: #e8eaed;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  flex: 1;
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  color: #e8eaed;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: justify;
+  background: rgba(26, 26, 46, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(138, 180, 248, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+header {
+  padding: 30px;
+  text-align: center;
+}
+
 footer {
   width: 100%;
   background: linear-gradient(135deg, #0f0f23, #1a1a2e);
@@ -527,4 +632,160 @@ footer {
   display: flex;
   border-top: 1px solid rgba(138, 180, 248, 0.2);
   font-weight: 300;
+  margin-top: auto;
+}
+
+/* Secao de Perfil */
+.profile-section {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.profile-image {
+  position: sticky;
+  top: 20px;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 2px solid rgba(138, 180, 248, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.profile-image img:hover {
+  transform: scale(1.02);
+  border-color: rgba(138, 180, 248, 0.5);
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.intro-card,
+.interests-card,
+.journey-card {
+  background: rgba(26, 26, 46, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid rgba(138, 180, 248, 0.2);
+  transition: all 0.3s ease;
+}
+
+.intro-card:hover,
+.interests-card:hover,
+.journey-card:hover {
+  border-color: rgba(138, 180, 248, 0.4);
+  transform: translateY(-2px);
+}
+
+.intro-card h2 {
+  color: #8ab4f8;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.interests-card h3,
+.journey-card h3 {
+  color: #8ab4f8;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
+
+.interests-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.interest-tag {
+  background: linear-gradient(135deg, #6a4c93, #8ab4f8);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.journey-card p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: #e8eaed;
+}
+
+.journey-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .profile-section {
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+  
+  .main-content {
+    margin-left: 200px;
+  }
+  
+  .profile-section {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .profile-image {
+    position: static;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .nav-text {
+    display: none;
+  }
+  
+  .sidebar {
+    width: 60px;
+  }
+  
+  .nav-item {
+    justify-content: center;
+    padding: 15px 10px;
+  }
+  
+  .profile-image {
+    max-width: 250px;
+  }
+  
+  .intro-card,
+  .interests-card,
+  .journey-card {
+    padding: 20px;
+  }
 }

@@ -172,9 +172,129 @@ O portfólio agora está:
 - **Layout organizado** em grid responsivo
 - **Animações suaves** em todos os elementos
 
+## Remocao de Imagem e Texto Solto
+
+### index.html - Limpeza Final
+- REMOVIDO: Imagem luke-Junin.png que causava texto solto
+- REMOVIDO: Texto "Foto do Andre Junior" solto
+- CORRIGIDO: Estrutura da secao sobre-mim com paragrafo adequado
+- MELHORADO: Formatacao do texto sobre o desenvolvedor
+- REMOVIDO: Caracteres especiais desnecessarios (||)
+
+## Correcao de Icones de Contato
+
+### style.css - Icones Coloridos
+- REMOVIDO: Filtro brightness(0) invert(1) que deixava icones brancos
+- CORRIGIDO: Instagram e Discord agora mostram cores originais
+- AUMENTADO: Tamanho dos icones de 45px para 50px
+- MELHORADO: Visibilidade e reconhecimento dos icones
+
+## Implementacao de Icones de Controles de Videogame
+
+### script.js - Icones dos Projetos
+- SUBSTITUIDO: Todas as imagens img-sei-la.png por icones de controles
+- ALTERNADO: Tres tipos de controles diferentes para variedade visual
+- ADICIONADO: Sistema automatico de icones para novos projetos
+- MELHORADO: Representacao visual tematica para projetos de jogos
+- CONFIGURADO: Rotacao automatica entre os tres icones disponiveis
+
+### Icones Utilizados:
+1. controlador.png - Projetos 1, 4
+2. controle-de-jogo.png - Projetos 2, 5  
+3. controle-de-video-game (1).png - Projetos 3, 6
+
+## Atualizacao do Icone do Instagram
+
+### index.html - Icone de Contato
+- SUBSTITUIDO: it.png por instagram.png para melhor qualidade
+- MELHORADO: Icone mais reconhecivel e profissional
+- APLICADO: Novo icone do Instagram nos contatos
+
+## Substituicao por Icones SVG Brancos
+
+### index.html - Icones de Contato
+- REMOVIDO: Imagens PNG dos icones (instagram.png, github-sign.png, dc.png)
+- SUBSTITUIDO: Por icones SVG brancos nativos
+- PADRONIZADO: Todos os icones agora sao SVG como o WhatsApp
+- MELHORADO: Qualidade vetorial e consistencia visual
+
+### style.css - Estilizacao SVG
+- ADICIONADO: Estilos para todos os icones SVG
+- PADRONIZADO: Tamanho 50x50px para todos os icones
+- CONFIGURADO: Cor branca uniforme para todos os icones
+
+### Icones SVG Implementados:
+1. Instagram - Icone de camera com circulo
+2. GitHub - Icone do gato do GitHub
+3. Discord - Icone do mascote Discord
+4. WhatsApp - Icone de telefone (ja existente)
+
+## Implementacao de Menu Lateral e Reorganizacao
+
+### Arquivos Criados
+- CRIADO: contatos.html - Pagina dedicada aos contatos
+
+### Arquivos Removidos
+- REMOVIDO: projetomario.html - Amostra do projeto Mario
+
+### index.html - Menu Lateral e Limpeza
+- REMOVIDO: Secao de contatos movida para pagina separada
+- ADICIONADO: Menu lateral fixo com navegacao
+- IMPLEMENTADO: Layout com sidebar e main-content
+- MELHORADO: Estrutura de navegacao mais profissional
+
+### meusProjetos.html - Menu Lateral
+- SUBSTITUIDO: Navegacao superior por menu lateral
+- REMOVIDO: Link para projeto Mario
+- PADRONIZADO: Layout consistente com outras paginas
+
+### contatos.html - Pagina Dedicada
+- CRIADO: Pagina exclusiva para contatos
+- IMPLEMENTADO: Mesmo menu lateral das outras paginas
+- MIGRADO: Todos os cards de contato para pagina separada
+
+### style.css - Estilos do Menu Lateral
+- ADICIONADO: Estilos completos para sidebar fixa
+- IMPLEMENTADO: Layout responsivo com margin-left
+- CRIADO: Estados hover e active para navegacao
+- CONFIGURADO: Responsividade para mobile
+- PADRONIZADO: Layout consistente em todas as paginas
+
+### Estrutura de Navegacao:
+1. Home - Pagina inicial com informacoes pessoais
+2. Projetos - Portfolio de projetos
+3. Contatos - Redes sociais e contatos
+
+## Formatacao da Imagem e Biografia Minimalista
+
+### index.html - Reestruturacao do Perfil
+- REORGANIZADO: Biografia em cards organizados
+- CRIADO: Secao de perfil com grid layout
+- DIVIDIDO: Conteudo em intro, interesses e jornada
+- MELHORADO: Texto mais profissional e conciso
+- ADICIONADO: Tags de interesses visuais
+- ESTRUTURADO: Layout com imagem e conteudo lado a lado
+
+### style.css - Estilos Minimalistas do Perfil
+- IMPLEMENTADO: Grid layout para perfil (300px + 1fr)
+- ESTILIZADO: Imagem com bordas arredondadas e hover
+- CRIADO: Cards com backdrop-filter e blur
+- ADICIONADO: Tags de interesses com gradientes
+- CONFIGURADO: Imagem sticky para melhor UX
+- RESPONSIVO: Adaptacao para mobile e tablet
+- PADRONIZADO: Espacamentos e transicoes suaves
+
+### Melhorias Visuais:
+1. Imagem formatada 300x300px com bordas arredondadas
+2. Cards organizados com hover effects
+3. Tags coloridas para interesses
+4. Layout responsivo grid -> coluna unica
+5. Tipografia hierarquizada e limpa
+
 ---
-**Total de correções:** 70+ problemas resolvidos
-**Arquivos modificados:** 9
-**Arquivos criados:** 3
-**Última atualização:** Correções de formatação e melhorias de contato
-**Status:** ✅ Pronto para produção
+**Total de correcoes:** 105+ problemas resolvidos
+**Arquivos modificados:** 20
+**Arquivos criados:** 4
+**Arquivos removidos:** 1
+**Ultima atualizacao:** Formatacao da imagem e biografia minimalista
+**Status:** Pronto para producao
