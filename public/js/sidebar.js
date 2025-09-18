@@ -78,6 +78,13 @@ function updateSidebar() {
     
     // Adicionar efeitos de ripple
     addRippleEffects();
+    
+    // Adicionar fechamento automático nos links
+    document.querySelectorAll('.nav-item').forEach(item => {
+      if (!item.onclick) {
+        item.addEventListener('click', closeSidebarOnNavigation);
+      }
+    });
   }, 200);
 }
 
@@ -141,6 +148,28 @@ function createNavRipple(e) {
   setTimeout(() => ripple.remove(), 600);
 }
 
+// Fechar sidebar ao clicar em link
+function closeSidebarOnNavigation() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggleBtn = document.querySelector('.sidebar-toggle');
+  
+  sidebar.classList.remove('active');
+  sidebar.classList.add('hidden');
+  overlay.classList.remove('active');
+  toggleBtn.classList.remove('active');
+}
+
+// Fechar sidebar com ESC
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar.classList.contains('active')) {
+      toggleSidebar();
+    }
+  }
+});
+
 // Atualizar sidebar quando a página carrega
 document.addEventListener('DOMContentLoaded', function() {
   // Animação de entrada da página
@@ -149,18 +178,36 @@ document.addEventListener('DOMContentLoaded', function() {
     mainContent.classList.add('page-transition-enter');
   }
   
+  // Sidebar inicia fechado
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar) {
+    sidebar.classList.add('hidden');
+  }
+  
   updateSidebar();
 });
 
-// Toggle sidebar
+// Toggle sidebar estilo GitHub
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
-  const mainContent = document.getElementById('mainContent');
+  const overlay = document.getElementById('sidebarOverlay');
   const toggleBtn = document.querySelector('.sidebar-toggle');
   
-  sidebar.classList.toggle('collapsed');
-  mainContent.classList.toggle('expanded');
-  toggleBtn.classList.toggle('active');
+  const isActive = sidebar.classList.contains('active');
+  
+  if (isActive) {
+    // Fechar sidebar
+    sidebar.classList.remove('active');
+    sidebar.classList.add('hidden');
+    overlay.classList.remove('active');
+    toggleBtn.classList.remove('active');
+  } else {
+    // Abrir sidebar
+    sidebar.classList.remove('hidden');
+    sidebar.classList.add('active');
+    overlay.classList.add('active');
+    toggleBtn.classList.add('active');
+  }
 }
 
 // Atualizar sidebar após login/logout
