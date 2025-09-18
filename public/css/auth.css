@@ -594,6 +594,42 @@ input:checked + .toggle-slider:before {
   box-shadow: 0 6px 20px rgba(138, 180, 248, 0.5);
 }
 
+/* Layout Discord */
+.discord-profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(15, 15, 35, 0.9);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Banner */
+.profile-banner {
+  height: 120px;
+  position: relative;
+  background: linear-gradient(135deg, #5865f2, #7289da);
+}
+
+.banner-color {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #5865f2, #7289da, #8ab4f8);
+}
+
+.edit-banner-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
 /* Avatar no sidebar */
 .sidebar-avatar {
   margin-top: 15px;

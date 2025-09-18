@@ -7,6 +7,7 @@
   <link rel="icon" type="image/jpeg" href="./assets/logo/AJ_Logo_Design_4.jpg">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/auth.css">
+  <link rel="stylesheet" href="./css/discord-profile.css">
   <link rel="stylesheet" href="./css/animations.css">
   <link rel="stylesheet" href="./css/accessibility.css">
 </head>
@@ -26,19 +27,37 @@
     </header>
 
     <main>
-      <div class="auth-container">
-        <div class="auth-form">
-          <div class="profile-section-account">
-            <div class="profile-avatar" id="profileAvatar">
+      <div class="discord-profile-container">
+        <!-- Banner -->
+        <div class="profile-banner">
+          <div class="banner-color"></div>
+          <button class="edit-banner-btn">✏️</button>
+        </div>
+        
+        <!-- Avatar e Info Principal -->
+        <div class="profile-header">
+          <div class="avatar-section">
+            <div class="profile-avatar-large" id="profileAvatar">
               <img src="./assets/img/default-avatar.png" alt="Avatar" id="avatarImg">
-              <button class="avatar-upload" onclick="document.getElementById('avatarInput').click()">📷</button>
+              <button class="avatar-edit-btn" onclick="document.getElementById('avatarInput').click()">📷</button>
               <input type="file" id="avatarInput" accept="image/jpeg,image/jpg,image/png,image/gif" style="display: none;" onchange="handleAvatarUpload(event)">
             </div>
-            
-            <div class="user-info" id="userInfo">
-              <!-- Informações do usuário serão carregadas aqui -->
+            <div class="status-indicator online"></div>
+          </div>
+          
+          <div class="profile-info">
+            <div class="username-section">
+              <h1 class="display-name" id="displayName">Usuário</h1>
+              <span class="username" id="username">#0000</span>
+            </div>
+            <div class="profile-badges">
+              <span class="badge verified">✓</span>
             </div>
           </div>
+        </div>
+        
+        <!-- Conteúdo Principal -->
+        <div class="profile-content">
           
           <!-- Crop Modal -->
           <div id="cropModal" class="modal hidden">
@@ -58,32 +77,53 @@
               </div>
             </div>
           </div>
-          
-          <div class="account-tabs">
-            <button class="tab-btn active" onclick="showTab('profile')">Perfil</button>
-            <button class="tab-btn" onclick="showTab('security')">Segurança</button>
-          </div>
-          
-          <div class="tab-content" id="profileTab">
-            <h3>Informações do Perfil</h3>
-            <form id="profileForm">
-              <input type="text" id="displayName" placeholder="Nome de exibição" required>
-              <input type="text" id="username" placeholder="Nome de usuário" required>
-              <input type="text" id="nickname" placeholder="Apelido">
-              <textarea id="bio" placeholder="Biografia" rows="3"></textarea>
-              <button type="submit">Salvar Perfil</button>
-            </form>
-          </div>
-          
-          <div class="tab-content" id="securityTab" style="display: none;">
-            <h3>Alterar Senha</h3>
-            <form id="changePasswordForm">
-              <input type="password" id="currentPassword" placeholder="Senha atual" required>
-              <input type="password" id="newPassword" placeholder="Nova senha" required>
-              <small class="password-hint">Mínimo 8 caracteres, 1 maiúscula e 1 número/símbolo</small>
-              <input type="password" id="confirmNewPassword" placeholder="Confirmar nova senha" required>
-              <button type="submit">Alterar Senha</button>
-            </form>
+          <!-- Cards de Informações -->
+          <div class="profile-cards">
+            <!-- Card Sobre Mim -->
+            <div class="profile-card">
+              <h3>Sobre mim</h3>
+              <div class="about-content">
+                <textarea id="bio" placeholder="Conte um pouco sobre você..." rows="4"></textarea>
+                <button class="save-btn" onclick="saveBio()">Salvar</button>
+              </div>
+            </div>
+            
+            <!-- Card Configurações de Perfil -->
+            <div class="profile-card">
+              <h3>Configurações de Perfil</h3>
+              <form id="profileForm">
+                <div class="form-group">
+                  <label>Nome de Exibição</label>
+                  <input type="text" id="profileDisplayName" placeholder="Seu nome">
+                </div>
+                <div class="form-group">
+                  <label>Nome de Usuário</label>
+                  <input type="text" id="profileUsername" placeholder="usuario">
+                </div>
+                <button type="submit" class="discord-btn">Salvar Alterações</button>
+              </form>
+            </div>
+            
+            <!-- Card Segurança -->
+            <div class="profile-card">
+              <h3>Senha e Autenticação</h3>
+              <form id="changePasswordForm">
+                <div class="form-group">
+                  <label>Senha Atual</label>
+                  <input type="password" id="currentPassword" placeholder="Senha atual">
+                </div>
+                <div class="form-group">
+                  <label>Nova Senha</label>
+                  <input type="password" id="newPassword" placeholder="Nova senha">
+                  <small class="form-hint">Mínimo 8 caracteres, 1 maiúscula e 1 número/símbolo</small>
+                </div>
+                <div class="form-group">
+                  <label>Confirmar Nova Senha</label>
+                  <input type="password" id="confirmNewPassword" placeholder="Confirmar senha">
+                </div>
+                <button type="submit" class="discord-btn danger">Alterar Senha</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
