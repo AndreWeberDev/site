@@ -10,35 +10,25 @@
 </head>
 
 <body>
-    <div class="sidebar">
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+        <span class="hamburger"></span>
+    </button>
+
+    <div class="sidebar hidden" id="sidebar">
         <div class="sidebar-header">
             <h2>Menu</h2>
+            <button class="sidebar-close" onclick="toggleSidebar()">×</button>
         </div>
         <nav class="sidebar-nav">
-            <a href="./index.html" class="nav-item">
-                <span class="nav-icon">🏠</span>
-                <span class="nav-text">Home</span>
-            </a>
-            <a href="./meusProjetos.html" class="nav-item">
-                <span class="nav-icon">💼</span>
-                <span class="nav-text">Projetos</span>
-            </a>
-            <a href="./contatos.html" class="nav-item active">
-                <span class="nav-icon">📞</span>
-                <span class="nav-text">Contatos</span>
-            </a>
-            <a href="./login.html" class="nav-item">
-                <span class="nav-icon">🔑</span>
-                <span class="nav-text">Login</span>
-            </a>
-            <a href="./register.html" class="nav-item">
-                <span class="nav-icon">📝</span>
-                <span class="nav-text">Cadastro</span>
-            </a>
+            <!-- Menu será carregado dinamicamente -->
         </nav>
     </div>
 
-    <div class="main-content">
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="main-content" id="mainContent">
         <header>
             <h1>Meus Contatos</h1>
         </header>
@@ -110,6 +100,7 @@
         <footer>&copy; Todos os direitos reservados | André Junior 2025</footer>
     </div>
 
+    <script src="./js/database.js"></script>
     <script src="./js/auth.js"></script>
     <script src="./js/sidebar.js"></script>
     <script src="./js/animations.js"></script>

@@ -86,6 +86,21 @@ body {
   display: block;
 }
 
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
+.remember-me input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
 /* Perfil expandido */
 .profile-section-account {
   display: flex;

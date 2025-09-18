@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const password = document.getElementById('password').value;
 
       try {
-        const user = auth.login(email, password);
+        const rememberMe = document.getElementById('rememberMe').checked;
+        const user = await auth.login(email, password, rememberMe);
         
         // Animação de sucesso
         const form = document.querySelector('.auth-form');
@@ -140,11 +141,13 @@ document.addEventListener('DOMContentLoaded', function() {
         form.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
         
         setTimeout(() => {
-          refreshSidebar();
+          if (typeof refreshSidebar === 'function') {
+            refreshSidebar();
+          }
           if (user.isAdmin) {
-            handleNavClick({preventDefault: () => {}}, 'admin.html');
+            window.location.href = 'admin.html';
           } else {
-            handleNavClick({preventDefault: () => {}}, 'contatos.html');
+            window.location.href = 'contatos.html';
           }
         }, 800);
       } catch (error) {
@@ -167,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       try {
-        auth.register(name, email, password);
+        await auth.register(name, email, password);
         
         // Animação de sucesso
         const form = document.querySelector('.auth-form');
@@ -176,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         showSuccess('Cadastro realizado com sucesso!');
         setTimeout(() => {
-          handleNavClick({preventDefault: () => {}}, 'login.html');
+          window.location.href = 'login.html';
         }, 2000);
       } catch (error) {
         showError(error.message);
@@ -213,7 +216,7 @@ function showSuccess(message) {
   form.insertBefore(successDiv, form.firstChild);
 }
 
-function logout() {
+async function logout() {
   // Animação de logout
   const mainContent = document.querySelector('.main-content');
   if (mainContent) {
@@ -221,10 +224,12 @@ function logout() {
     mainContent.style.opacity = '0.7';
   }
   
-  setTimeout(() => {
-    auth.logout();
-    refreshSidebar();
-    handleNavClick({preventDefault: () => {}}, 'index.html');
+  setTimeout(async () => {
+    await auth.logout();
+    if (typeof refreshSidebar === 'function') {
+      refreshSidebar();
+    }
+    window.location.href = 'index.html';
   }, 300);
 }
 
