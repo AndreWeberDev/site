@@ -73,10 +73,13 @@ function loadProfileForm() {
   const user = auth.currentUser;
   if (!user) return;
   
-  document.getElementById('displayName').value = user.displayName || user.name;
-  document.getElementById('username').value = user.username || user.email.split('@')[0];
-  document.getElementById('nickname').value = user.nickname || '';
-  document.getElementById('bio').value = user.bio || '';
+  const profileDisplayName = document.getElementById('profileDisplayName');
+  const profileUsername = document.getElementById('profileUsername');
+  const bio = document.getElementById('bio');
+  
+  if (profileDisplayName) profileDisplayName.value = user.displayName || user.name;
+  if (profileUsername) profileUsername.value = user.username || user.email.split('@')[0];
+  if (bio) bio.value = user.bio || '';
 }
 
 function showTab(tabName) {
