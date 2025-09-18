@@ -75,8 +75,8 @@ class AuthSystem {
     this.users.push(user);
     localStorage.setItem('users', JSON.stringify(this.users));
     
-    // Simular envio de email de verificação
-    alert('Cadastro realizado! Verifique seu email para ativar a conta.');
+    // Marcar como verificado para simplificar
+    user.verified = true;
     return user;
   }
 
@@ -132,8 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const password = document.getElementById('password').value;
 
       try {
-        const rememberMe = document.getElementById('rememberMe').checked;
-        const user = await auth.login(email, password, rememberMe);
+        const rememberMe = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : false;
+        const user = auth.login(email, password);
         
         // Animação de sucesso
         const form = document.querySelector('.auth-form');
@@ -170,16 +170,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       try {
-        await auth.register(name, email, password);
+        auth.register(name, email, password);
         
         // Animação de sucesso
         const form = document.querySelector('.auth-form');
         form.style.transform = 'scale(1.05)';
         form.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
         
-        showSuccess('Cadastro realizado! Verifique seu email.');
+        showSuccess('Cadastro realizado com sucesso!');
         setTimeout(() => {
-          window.location.href = 'verify-email.html';
+          window.location.href = 'login.html';
         }, 2000);
       } catch (error) {
         showError(error.message);
@@ -224,8 +224,8 @@ async function logout() {
     mainContent.style.opacity = '0.7';
   }
   
-  setTimeout(async () => {
-    await auth.logout();
+  setTimeout(() => {
+    auth.logout();
     if (typeof refreshSidebar === 'function') {
       refreshSidebar();
     }

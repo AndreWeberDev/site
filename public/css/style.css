@@ -942,9 +942,11 @@ footer {
   background: linear-gradient(90deg, #4285f4, #8ab4f8, #9bc5f9);
   border-radius: 10px;
   width: 0%;
-  transition: width 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: width 2.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  will-change: width;
+  transform: translateZ(0);
 }
 
 .skill-progress::before {

@@ -29,7 +29,7 @@ function animateSkillBars(skillsCard) {
       const level = bar.getAttribute('data-level');
       bar.style.width = level + '%';
       bar.classList.add('animated');
-    }, index * 200);
+    }, index * 150);
   });
 }
 
@@ -73,8 +73,8 @@ function animateTyping() {
             title.style.borderRight = 'none';
           }, 500);
         }
-      }, 50);
-    }, index * 200);
+      }, 30);
+    }, index * 100);
   });
 }
 
