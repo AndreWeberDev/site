@@ -446,6 +446,141 @@ input:checked + .toggle-slider:before {
   transform: translateY(-2px);
 }
 
+/* Modal de Preview */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: rgba(26, 26, 46, 0.95);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid rgba(138, 180, 248, 0.3);
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+.modal-content h3 {
+  color: #8ab4f8;
+  margin-bottom: 20px;
+}
+
+.crop-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.crop-container img {
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 50%;
+  border: 2px solid #8ab4f8;
+  object-fit: cover;
+}
+
+.crop-controls {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.crop-controls label {
+  color: #e8eaed;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.crop-controls input[type="range"] {
+  width: 150px;
+}
+
+#sizeValue {
+  color: #8ab4f8;
+  font-weight: bold;
+  min-width: 50px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.modal-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.modal-actions button:first-child {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.modal-actions button:first-child:hover {
+  background: rgba(255, 107, 107, 0.3);
+}
+
+/* Preview do Avatar na Página */
+.avatar-preview-container {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(15, 15, 35, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(138, 180, 248, 0.2);
+  text-align: center;
+}
+
+.avatar-preview-container h4 {
+  color: #8ab4f8;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.avatar-preview-img {
+  display: flex;
+  justify-content: center;
+}
+
+.avatar-preview-img img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #8ab4f8;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(138, 180, 248, 0.3);
+  transition: all 0.3s ease;
+}
+
+.avatar-preview-img img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(138, 180, 248, 0.5);
+}
+
 /* Avatar no sidebar */
 .sidebar-avatar {
   margin-top: 15px;

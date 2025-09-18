@@ -96,41 +96,130 @@ function showTab(tabName) {
   document.getElementById(tabName + 'Tab').style.display = 'block';
 }
 
+let currentImageFile = null;
+let currentImageData = null;
+
 async function handleAvatarUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
-  
-  const avatarImg = document.getElementById('avatarImg');
-  const originalSrc = avatarImg.src;
   
   try {
     // Validar arquivo
     ImageProcessor.validateFile(file);
     
-    // Mostrar loading
-    avatarImg.style.opacity = '0.5';
+    currentImageFile = file;
     
-    // Processar imagem
-    const processedImage = await ImageProcessor.processImage(file);
+    // Ler arquivo para preview
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      currentImageData = e.target.result;
+      showImagePreview(e.target.result);
+    };
+    reader.readAsDataURL(file);
     
-    // Atualizar avatar
+  } catch (error) {
+    showError(error.message);
+  }
+}
+
+function showImagePreview(imageSrc) {
+  const modal = document.getElementById('imagePreviewModal');
+  const previewImg = document.getElementById('previewImage');
+  const sizeSlider = document.getElementById('cropSize');
+  const sizeValue = document.getElementById('sizeValue');
+  
+  previewImg.src = imageSrc;
+  modal.classList.remove('hidden');
+  
+  // Atualizar tamanho em tempo real
+  sizeSlider.oninput = function() {
+    const size = this.value;
+    previewImg.style.width = size + 'px';
+    previewImg.style.height = size + 'px';
+    sizeValue.textContent = size + 'px';
+  };
+  
+  // Definir tamanho inicial
+  previewImg.style.width = '200px';
+  previewImg.style.height = '200px';
+}
+
+function cancelCrop() {
+  const modal = document.getElementById('imagePreviewModal');
+  modal.classList.add('hidden');
+  currentImageFile = null;
+  currentImageData = null;
+  
+  // Limpar input
+  document.getElementById('avatarInput').value = '';
+}
+
+async function applyCrop() {
+  if (!currentImageData) return;
+  
+  const sizeSlider = document.getElementById('cropSize');
+  const targetSize = parseInt(sizeSlider.value);
+  
+  try {
+    // Processar imagem com tamanho personalizado
+    const processedImage = await ImageProcessor.processImage(currentImageFile, targetSize);
+    
+    // Atualizar avatar na página
+    const avatarImg = document.getElementById('avatarImg');
     avatarImg.src = processedImage;
-    avatarImg.style.opacity = '1';
+    
+    // Mostrar preview na página
+    showAvatarPreview(processedImage);
     
     // Salvar no perfil
     auth.updateUserProfile(auth.currentUser.id, { 
       avatar: processedImage,
-      avatarType: file.type
+      avatarType: currentImageFile.type
     });
     
-    showSuccess(`Avatar ${file.type === 'image/gif' ? 'GIF' : ''} atualizado com sucesso!`);
+    showSuccess(`Avatar ${currentImageFile.type === 'image/gif' ? 'GIF' : ''} atualizado com sucesso!`);
     updateSidebarAvatar(processedImage);
     
+    // Fechar modal
+    cancelCrop();
+    
   } catch (error) {
-    avatarImg.src = originalSrc;
-    avatarImg.style.opacity = '1';
     showError(error.message);
   }
+}
+
+function showAvatarPreview(imageSrc) {
+  // Criar ou atualizar preview na página
+  let previewContainer = document.getElementById('avatarPreviewContainer');
+  
+  if (!previewContainer) {
+    previewContainer = document.createElement('div');
+    previewContainer.id = 'avatarPreviewContainer';
+    previewContainer.className = 'avatar-preview-container';
+    previewContainer.innerHTML = `
+      <h4>Sua Nova Foto:</h4>
+      <div class="avatar-preview-img">
+        <img id="avatarPreviewImg" src="" alt="Preview">
+      </div>
+    `;
+    
+    // Inserir após a seção de avatar
+    const profileSection = document.querySelector('.profile-section-account');
+    profileSection.appendChild(previewContainer);
+  }
+  
+  const previewImg = document.getElementById('avatarPreviewImg');
+  previewImg.src = imageSrc;
+  
+  // Animação de entrada
+  previewContainer.style.opacity = '0';
+  previewContainer.style.transform = 'translateY(20px)';
+  
+  setTimeout(() => {
+    previewContainer.style.transition = 'all 0.5s ease';
+    previewContainer.style.opacity = '1';
+    previewContainer.style.transform = 'translateY(0)';
+  }, 100);
 }
 
 // Atualizar avatar no sidebar

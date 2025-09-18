@@ -40,6 +40,24 @@
             </div>
           </div>
           
+          <!-- Preview Modal -->
+          <div id="imagePreviewModal" class="modal hidden">
+            <div class="modal-content">
+              <h3>Redimensionar Imagem</h3>
+              <div class="crop-container">
+                <img id="previewImage" src="" alt="Preview">
+              </div>
+              <div class="crop-controls">
+                <label>Tamanho: <input type="range" id="cropSize" min="100" max="400" value="200"></label>
+                <span id="sizeValue">200px</span>
+              </div>
+              <div class="modal-actions">
+                <button onclick="cancelCrop()">Cancelar</button>
+                <button onclick="applyCrop()" class="btn-primary">Aplicar</button>
+              </div>
+            </div>
+          </div>
+          
           <div class="account-tabs">
             <button class="tab-btn active" onclick="showTab('profile')">Perfil</button>
             <button class="tab-btn" onclick="showTab('security')">Segurança</button>
