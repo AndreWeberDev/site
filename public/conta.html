@@ -40,20 +40,21 @@
             </div>
           </div>
           
-          <!-- Preview Modal -->
-          <div id="imagePreviewModal" class="modal hidden">
+          <!-- Crop Modal -->
+          <div id="cropModal" class="modal hidden">
             <div class="modal-content">
-              <h3>Redimensionar Imagem</h3>
-              <div class="crop-container">
-                <img id="previewImage" src="" alt="Preview">
+              <h3>Ajustar Imagem</h3>
+              <div class="crop-area">
+                <div class="crop-circle">
+                  <img id="cropImage" src="" alt="Crop" draggable="false">
+                </div>
               </div>
-              <div class="crop-controls">
-                <label>Tamanho: <input type="range" id="cropSize" min="100" max="400" value="200"></label>
-                <span id="sizeValue">200px</span>
+              <div class="crop-zoom">
+                <label>Zoom: <input type="range" id="zoomSlider" min="0.5" max="3" step="0.1" value="1"></label>
               </div>
               <div class="modal-actions">
                 <button onclick="cancelCrop()">Cancelar</button>
-                <button onclick="applyCrop()" class="btn-primary">Aplicar</button>
+                <button onclick="applyCrop()" class="btn-primary">Salvar</button>
               </div>
             </div>
           </div>

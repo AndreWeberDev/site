@@ -122,33 +122,66 @@ async function handleAvatarUpload(event) {
   }
 }
 
+let cropData = { x: 0, y: 0, scale: 1 };
+let isDragging = false;
+
 function showImagePreview(imageSrc) {
-  const modal = document.getElementById('imagePreviewModal');
-  const previewImg = document.getElementById('previewImage');
-  const sizeSlider = document.getElementById('cropSize');
-  const sizeValue = document.getElementById('sizeValue');
+  const modal = document.getElementById('cropModal');
+  const cropImg = document.getElementById('cropImage');
+  const zoomSlider = document.getElementById('zoomSlider');
   
-  previewImg.src = imageSrc;
+  cropImg.src = imageSrc;
   modal.classList.remove('hidden');
   
-  // Atualizar tamanho em tempo real
-  sizeSlider.oninput = function() {
-    const size = this.value;
-    previewImg.style.width = size + 'px';
-    previewImg.style.height = size + 'px';
-    sizeValue.textContent = size + 'px';
+  // Reset crop data
+  cropData = { x: 0, y: 0, scale: 1 };
+  updateCropImage();
+  
+  // Zoom control
+  zoomSlider.oninput = function() {
+    cropData.scale = parseFloat(this.value);
+    updateCropImage();
   };
   
-  // Definir tamanho inicial
-  previewImg.style.width = '200px';
-  previewImg.style.height = '200px';
+  // Drag functionality
+  cropImg.onmousedown = startDrag;
+  document.onmousemove = drag;
+  document.onmouseup = stopDrag;
+}
+
+function updateCropImage() {
+  const cropImg = document.getElementById('cropImage');
+  cropImg.style.transform = `translate(calc(-50% + ${cropData.x}px), calc(-50% + ${cropData.y}px)) scale(${cropData.scale})`;
+}
+
+function startDrag(e) {
+  isDragging = true;
+  const startX = e.clientX - cropData.x;
+  const startY = e.clientY - cropData.y;
+  
+  window.dragStart = { x: startX, y: startY };
+  e.preventDefault();
+}
+
+function drag(e) {
+  if (!isDragging || !window.dragStart) return;
+  
+  cropData.x = e.clientX - window.dragStart.x;
+  cropData.y = e.clientY - window.dragStart.y;
+  updateCropImage();
+}
+
+function stopDrag() {
+  isDragging = false;
+  window.dragStart = null;
 }
 
 function cancelCrop() {
-  const modal = document.getElementById('imagePreviewModal');
+  const modal = document.getElementById('cropModal');
   modal.classList.add('hidden');
   currentImageFile = null;
   currentImageData = null;
+  isDragging = false;
   
   // Limpar input
   document.getElementById('avatarInput').value = '';
@@ -157,31 +190,62 @@ function cancelCrop() {
 async function applyCrop() {
   if (!currentImageData) return;
   
-  const sizeSlider = document.getElementById('cropSize');
-  const targetSize = parseInt(sizeSlider.value);
-  
   try {
-    // Processar imagem com tamanho personalizado
-    const processedImage = await ImageProcessor.processImage(currentImageFile, targetSize);
+    // Criar canvas para crop
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
     
-    // Atualizar avatar na página
-    const avatarImg = document.getElementById('avatarImg');
-    avatarImg.src = processedImage;
+    img.onload = function() {
+      // Definir tamanho do canvas (200x200 para avatar)
+      canvas.width = 200;
+      canvas.height = 200;
+      
+      // Calcular posição e escala
+      const scale = cropData.scale;
+      const x = cropData.x;
+      const y = cropData.y;
+      
+      // Desenhar imagem cropada
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(100, 100, 100, 0, Math.PI * 2);
+      ctx.clip();
+      
+      const imgWidth = img.width * scale;
+      const imgHeight = img.height * scale;
+      const imgX = 100 - (imgWidth / 2) + x;
+      const imgY = 100 - (imgHeight / 2) + y;
+      
+      ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
+      ctx.restore();
+      
+      // Converter para base64
+      const croppedImage = canvas.toDataURL('image/png', 0.9);
+      
+      // Atualizar avatar
+      const avatarImg = document.getElementById('avatarImg');
+      avatarImg.src = croppedImage;
+      
+      // Mostrar preview na página
+      showAvatarPreview(croppedImage);
+      
+      // Salvar no perfil
+      if (window.auth && auth.currentUser) {
+        auth.updateUserProfile(auth.currentUser.id, { 
+          avatar: croppedImage,
+          avatarType: 'image/png'
+        });
+        
+        // Atualizar sidebar
+        updateSidebarAvatar(croppedImage);
+      }
+      
+      showSuccess('Avatar atualizado com sucesso!');
+      cancelCrop();
+    };
     
-    // Mostrar preview na página
-    showAvatarPreview(processedImage);
-    
-    // Salvar no perfil
-    auth.updateUserProfile(auth.currentUser.id, { 
-      avatar: processedImage,
-      avatarType: currentImageFile.type
-    });
-    
-    showSuccess(`Avatar ${currentImageFile.type === 'image/gif' ? 'GIF' : ''} atualizado com sucesso!`);
-    updateSidebarAvatar(processedImage);
-    
-    // Fechar modal
-    cancelCrop();
+    img.src = currentImageData;
     
   } catch (error) {
     showError(error.message);
