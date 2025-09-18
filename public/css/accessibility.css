@@ -1,0 +1,140 @@
+/* Configurações de Acessibilidade */
+
+/* Tamanhos de fonte */
+.font-large {
+  font-size: 18px !important;
+}
+
+.font-large h1 { font-size: 2.5rem !important; }
+.font-large h2 { font-size: 2rem !important; }
+.font-large h3 { font-size: 1.5rem !important; }
+.font-large p, .font-large span, .font-large div { font-size: 18px !important; }
+.font-large .nav-text { font-size: 16px !important; }
+.font-large .skill-name { font-size: 16px !important; }
+
+.font-extra-large {
+  font-size: 22px !important;
+}
+
+.font-extra-large h1 { font-size: 3rem !important; }
+.font-extra-large h2 { font-size: 2.5rem !important; }
+.font-extra-large h3 { font-size: 2rem !important; }
+.font-extra-large p, .font-extra-large span, .font-extra-large div { font-size: 22px !important; }
+.font-extra-large .nav-text { font-size: 18px !important; }
+.font-extra-large .skill-name { font-size: 18px !important; }
+
+/* Alto contraste */
+.high-contrast {
+  --bg-primary: #000000 !important;
+  --bg-secondary: #1a1a1a !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #cccccc !important;
+  --accent-color: #ffff00 !important;
+  --border-color: #ffffff !important;
+}
+
+.high-contrast body {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.high-contrast .sidebar {
+  background: #1a1a1a !important;
+  border-right: 2px solid #ffffff !important;
+}
+
+.high-contrast .main-content {
+  background: #000000 !important;
+}
+
+.high-contrast .intro-card,
+.high-contrast .interests-card,
+.high-contrast .journey-card,
+.high-contrast .skills-card,
+.high-contrast .goals-card {
+  background: #1a1a1a !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+.high-contrast .nav-item {
+  color: #ffffff !important;
+  border-left: 3px solid transparent !important;
+}
+
+.high-contrast .nav-item:hover,
+.high-contrast .nav-item.active {
+  background: #333333 !important;
+  border-left-color: #ffff00 !important;
+}
+
+.high-contrast .skill-progress {
+  background: #ffff00 !important;
+}
+
+.high-contrast .btncard,
+.high-contrast .btn-primary {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
+
+/* Reduzir movimento */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.reduce-motion .skill-progress {
+  transition: none !important;
+}
+
+.reduce-motion .project-card:hover,
+.reduce-motion .cards:hover {
+  transform: none !important;
+}
+
+/* Desabilitar aceleração por hardware */
+.no-hardware-acceleration * {
+  transform: none !important;
+  will-change: auto !important;
+  backface-visibility: visible !important;
+}
+
+/* Desabilitar animações */
+.no-animations * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.no-animations .skill-progress {
+  width: var(--target-width) !important;
+}
+
+.no-animations .project-card:hover,
+.no-animations .cards:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Desabilitar efeitos de blur */
+.no-blur * {
+  backdrop-filter: none !important;
+  filter: none !important;
+}
+
+.no-blur .sidebar {
+  background: rgba(15, 15, 35, 1) !important;
+}
+
+.no-blur .intro-card,
+.no-blur .interests-card,
+.no-blur .journey-card,
+.no-blur .skills-card,
+.no-blur .goals-card {
+  background: rgba(26, 26, 46, 1) !important;
+}

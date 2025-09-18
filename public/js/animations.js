@@ -11,15 +11,33 @@ const observer = new IntersectionObserver((entries) => {
     if (entry.isIntersecting) {
       entry.target.style.animationPlayState = 'running';
       entry.target.classList.add('animate-in');
+      
+      // Animar barras de skill
+      if (entry.target.classList.contains('skills-card')) {
+        animateSkillBars(entry.target);
+      }
     }
   });
 }, observerOptions);
+
+// Animar barras de progresso
+function animateSkillBars(skillsCard) {
+  const skillBars = skillsCard.querySelectorAll('.skill-progress');
+  
+  skillBars.forEach((bar, index) => {
+    setTimeout(() => {
+      const level = bar.getAttribute('data-level');
+      bar.style.width = level + '%';
+      bar.classList.add('animated');
+    }, index * 200);
+  });
+}
 
 // Observar elementos para animação
 document.addEventListener('DOMContentLoaded', function() {
   // Elementos para animar
   const elementsToAnimate = document.querySelectorAll(
-    '.project-card, .cards, .intro-card, .interests-card, .journey-card, .goals-card, .social-card'
+    '.project-card, .cards, .intro-card, .interests-card, .journey-card, .skills-card, .goals-card, .social-card'
   );
   
   elementsToAnimate.forEach(el => {

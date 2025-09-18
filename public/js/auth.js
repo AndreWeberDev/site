@@ -177,9 +177,9 @@ document.addEventListener('DOMContentLoaded', function() {
         form.style.transform = 'scale(1.05)';
         form.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
         
-        showSuccess('Cadastro realizado com sucesso!');
+        showSuccess('Cadastro realizado! Verifique seu email.');
         setTimeout(() => {
-          window.location.href = 'login.html';
+          window.location.href = 'verify-email.html';
         }, 2000);
       } catch (error) {
         showError(error.message);

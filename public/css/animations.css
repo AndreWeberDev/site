@@ -63,8 +63,9 @@
 .intro-card { animation-delay: 0.1s; }
 .interests-card { animation-delay: 0.2s; }
 .journey-card { animation-delay: 0.3s; }
-.goals-card { animation-delay: 0.4s; }
-.social-card { animation-delay: 0.5s; }
+.skills-card { animation-delay: 0.4s; }
+.goals-card { animation-delay: 0.5s; }
+.social-card { animation-delay: 0.6s; }
 
 .project-card {
   animation: scaleIn 0.6s ease-out both;

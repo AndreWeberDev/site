@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações - André Junior</title>
+  <link rel="icon" type="image/jpeg" href="./assets/logo/AJ_Logo_Design_4.jpg">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/auth.css">
+  <link rel="stylesheet" href="./css/animations.css">
+  <link rel="stylesheet" href="./css/accessibility.css">
+</head>
+<body>
+  <button class="sidebar-toggle" onclick="toggleSidebar()">
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+  </button>
+
+  <div class="sidebar hidden" id="sidebar">
+    <div class="sidebar-header">
+      <h2>Menu</h2>
+      <button class="sidebar-close" onclick="toggleSidebar()">×</button>
+    </div>
+    <nav class="sidebar-nav">
+      <!-- Menu será carregado dinamicamente -->
+    </nav>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <div class="main-content" id="mainContent">
+    <header>
+      <div class="header-logo">
+        <img src="./assets/logo/AJ_Logo_Design_4.jpg" alt="AJ Logo" class="logo">
+        <h1>Configurações</h1>
+      </div>
+    </header>
+
+    <main>
+      <div class="settings-container">
+        <div class="settings-section">
+          <h2>⚡ Acessibilidade</h2>
+          
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Tamanho da Fonte</span>
+              <span class="setting-description">Ajuste o tamanho do texto para melhor leitura</span>
+            </label>
+            <select id="fontSize" class="setting-select">
+              <option value="normal">Normal</option>
+              <option value="large">Grande</option>
+              <option value="extra-large">Extra Grande</option>
+            </select>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Alto Contraste</span>
+              <span class="setting-description">Aumenta o contraste para melhor visibilidade</span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="highContrast">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Reduzir Movimento</span>
+              <span class="setting-description">Desabilita animações para sensibilidade ao movimento</span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="reduceMotion">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h2>🚀 Performance</h2>
+          
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Aceleração por Hardware</span>
+              <span class="setting-description">Usa GPU para melhor performance (pode causar problemas em alguns dispositivos)</span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="hardwareAcceleration" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Animações</span>
+              <span class="setting-description">Habilita efeitos visuais e transições</span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="animations" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <label class="setting-label">
+              <span class="setting-title">Efeitos de Blur</span>
+              <span class="setting-description">Desabilita efeitos de desfoque para melhor performance</span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="blurEffects" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-actions">
+          <button class="btn-reset" onclick="resetSettings()">Restaurar Padrões</button>
+          <button class="btn-save" onclick="saveSettings()">Salvar Configurações</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>&copy; Todos os direitos reservados | André Junior 2025</footer>
+  </div>
+  
+  <script src="./js/database.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/sidebar.js"></script>
+  <script src="./js/animations.js"></script>
+  <script src="./js/settings.js"></script>
+</body>
+</html>

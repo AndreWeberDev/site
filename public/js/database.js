@@ -218,7 +218,13 @@ class PersistentAuth {
       createdAt: Date.now()
     };
 
-    await this.db.saveUser(user);
+    // Salvar usuário como pendente
+    localStorage.setItem('pendingUser', JSON.stringify(user));
+    
+    // Enviar código de verificação
+    const emailVerification = new EmailVerification();
+    await emailVerification.sendVerificationCode(email, name);
+    
     return user;
   }
 
@@ -253,6 +259,28 @@ class PersistentAuth {
 
   isAdmin() {
     return this.currentUser && this.currentUser.isAdmin;
+  }
+}
+
+// Classes de verificação
+class EmailVerification {
+  generateCode() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  }
+
+  async sendVerificationCode(email, name) {
+    const code = this.generateCode();
+    const expiry = Date.now() + (10 * 60 * 1000);
+    
+    localStorage.setItem('verificationCode', code);
+    localStorage.setItem('codeExpiry', expiry);
+    
+    console.log(`Código para ${email}: ${code}`);
+    setTimeout(() => {
+      alert(`CÓDIGO DE VERIFICAÇÃO:\n\n${code}\n\nEm um sistema real, seria enviado por email.`);
+    }, 1000);
+    
+    return true;
   }
 }
 

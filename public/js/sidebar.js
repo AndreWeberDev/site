@@ -71,6 +71,17 @@ function updateSidebar() {
       sidebarNav.appendChild(avatarSection);
     }
     
+    // Adicionar link de configurações para todos os usuários
+    const configLink = document.createElement('a');
+    configLink.href = './configuracoes.html';
+    configLink.className = `nav-item ${window.location.pathname.includes('configuracoes.html') ? 'active' : ''}`;
+    configLink.onclick = (e) => { handleNavClick(e, './configuracoes.html'); closeSidebarOnNavigation(); };
+    configLink.innerHTML = `
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-text">Configurações</span>
+    `;
+    sidebarNav.appendChild(configLink);
+    
     // Animação de entrada
     sidebarNav.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     sidebarNav.style.opacity = '1';
