@@ -40,28 +40,21 @@ function handleProfileUpdate(e) {
 });
 
 function loadUserInfo() {
-  const userInfo = document.getElementById('userInfo');
-  if (!userInfo || !auth.currentUser) return;
+  if (!auth.currentUser) return;
   
   const user = auth.currentUser;
   
-  userInfo.innerHTML = `
-    <div class="user-details">
-      <h2>${user.displayName || user.name}</h2>
-      <p class="username">@${user.username || user.email.split('@')[0]}</p>
-      <p class="nickname">${user.nickname || 'Sem apelido'}</p>
-      <p class="bio">${user.bio || 'Nenhuma biografia definida'}</p>
-      <span class="user-badge ${user.isAdmin ? 'admin' : 'user'}">
-        ${user.isAdmin ? 'Admin' : 'Usuário'}
-      </span>
-    </div>
-  `;
+  // Atualizar elementos do header Discord
+  const displayName = document.getElementById('displayName');
+  const username = document.getElementById('username');
+  const avatarImg = document.getElementById('avatarImg');
+  
+  if (displayName) displayName.textContent = user.displayName || user.name;
+  if (username) username.textContent = `#${user.id.toString().slice(-4)}`;
   
   // Carregar avatar
-  const avatarImg = document.getElementById('avatarImg');
   if (avatarImg) {
     avatarImg.src = user.avatar || './assets/img/default-avatar.png';
-    // Suporte para GIFs animados
     if (user.avatarType === 'image/gif') {
       avatarImg.style.imageRendering = 'auto';
     }
@@ -72,7 +65,7 @@ function loadUserInfo() {
     updateSidebarAvatar(user.avatar);
   }
   
-  // Preencher formulário
+  // Preencher formulários
   loadProfileForm();
 }
 
