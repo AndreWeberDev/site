@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const registerForm = document.getElementById('registerForm');
 
   if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
@@ -147,9 +147,9 @@ document.addEventListener('DOMContentLoaded', function() {
           if (user.isAdmin) {
             window.location.href = 'admin.html';
           } else {
-            window.location.href = 'contatos.html';
+            window.location.href = 'index.html';
           }
-        }, 800);
+        }, 500);
       } catch (error) {
         showError(error.message);
       }
