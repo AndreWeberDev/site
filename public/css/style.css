@@ -361,6 +361,7 @@ main section.social {
   position: relative;
   height: 200px;
   overflow: hidden;
+  background: rgba(26, 26, 46, 0.5);
 }
 
 .card-image img {
@@ -368,6 +369,8 @@ main section.social {
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .project-card:hover .card-image img {

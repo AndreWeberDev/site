@@ -60,14 +60,14 @@ function animateTyping() {
   });
 }
 
-// Parallax suave
+// Parallax suave (desabilitado para ícones de projetos)
 function setupParallax() {
   window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.profile-image, .card-image');
+    const parallaxElements = document.querySelectorAll('.profile-image');
     
     parallaxElements.forEach(el => {
-      const speed = 0.5;
+      const speed = 0.2;
       el.style.transform = `translateY(${scrolled * speed}px)`;
     });
   });
