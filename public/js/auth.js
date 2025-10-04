@@ -56,7 +56,7 @@ class AuthSystem {
     return null;
   }
 
-  register(name, email, password) {
+  async register(name, email, password) {
     if (this.users.find(user => user.email === email)) {
       throw new Error('Email já cadastrado');
     }
@@ -72,11 +72,24 @@ class AuthSystem {
       verified: false
     };
 
+    // Salvar usuário como pendente
+    localStorage.setItem('pendingUser', JSON.stringify(user));
+    
+    // Enviar código de verificação
+    const verification = new EmailVerification();
+    await verification.sendVerificationCode(email, name);
+    
+    return user;
+  }
+
+  completeRegistration(user) {
+    // Adicionar usuário verificado ao banco
     this.users.push(user);
     localStorage.setItem('users', JSON.stringify(this.users));
     
-    // Marcar como verificado para simplificar
-    user.verified = true;
+    // Limpar dados pendentes
+    localStorage.removeItem('pendingUser');
+    
     return user;
   }
 
@@ -130,27 +143,80 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
+      const submitButton = loginForm.querySelector('button[type="submit"]');
 
       try {
+        // Animação de loading
+        submitButton.textContent = 'Entrando...';
+        submitButton.disabled = true;
+        submitButton.style.background = 'linear-gradient(135deg, #9aa0a6, #666)';
+        
         const rememberMe = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : false;
         const user = auth.login(email, password);
         
-        // Animação de sucesso
+        // Animação de sucesso aprimorada
         const form = document.querySelector('.auth-form');
-        form.style.transform = 'scale(1.05)';
-        form.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        const container = document.querySelector('.auth-container');
+        
+        // Efeito de sucesso no botão
+        submitButton.textContent = '✓ Sucesso!';
+        submitButton.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        submitButton.style.transform = 'scale(1.05)';
+        
+        // Animação do formulário
+        form.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        form.style.transform = 'scale(1.02)';
+        form.style.background = 'linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(69, 160, 73, 0.1))';
+        form.style.border = '2px solid #4CAF50';
+        form.style.boxShadow = '0 0 30px rgba(76, 175, 80, 0.3)';
+        
+        // Animação do container
+        container.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        container.style.transform = 'scale(0.95) translateY(-10px)';
+        container.style.opacity = '0.9';
+        
+        // Mostrar mensagem de sucesso
+        showSuccess('Login realizado com sucesso! Redirecionando...');
         
         setTimeout(() => {
-          if (typeof refreshSidebar === 'function') {
-            refreshSidebar();
-          }
-          if (user.isAdmin) {
-            window.location.href = 'admin.html';
-          } else {
-            window.location.href = 'index.html';
-          }
-        }, 500);
+          // Animação de saída
+          container.style.transform = 'scale(0.8) translateY(-50px)';
+          container.style.opacity = '0';
+          
+          setTimeout(() => {
+            if (typeof refreshSidebar === 'function') {
+              refreshSidebar();
+            }
+            if (user.isAdmin) {
+              window.location.href = 'admin.html';
+            } else {
+              window.location.href = 'index.html';
+            }
+          }, 400);
+        }, 1200);
+        
       } catch (error) {
+        // Reset do botão em caso de erro
+        submitButton.textContent = 'Entrar';
+        submitButton.disabled = false;
+        submitButton.style.background = '#667eea';
+        submitButton.style.transform = 'scale(1)';
+        
+        // Animação de erro
+        const form = document.querySelector('.auth-form');
+        form.style.transition = 'all 0.3s ease';
+        form.style.transform = 'translateX(-10px)';
+        form.style.border = '2px solid #e74c3c';
+        
+        setTimeout(() => {
+          form.style.transform = 'translateX(10px)';
+        }, 150);
+        
+        setTimeout(() => {
+          form.style.transform = 'translateX(0)';
+          form.style.border = '1px solid #ddd';
+        }, 300);
+        
         showError(error.message);
       }
     });
@@ -163,25 +229,83 @@ document.addEventListener('DOMContentLoaded', function() {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
+      const submitButton = registerForm.querySelector('button[type="submit"]');
 
       if (password !== confirmPassword) {
+        // Animação de erro para senhas diferentes
+        const passwordFields = [document.getElementById('password'), document.getElementById('confirmPassword')];
+        passwordFields.forEach(field => {
+          field.style.border = '2px solid #e74c3c';
+          field.style.transform = 'translateX(-5px)';
+          setTimeout(() => field.style.transform = 'translateX(5px)', 100);
+          setTimeout(() => {
+            field.style.transform = 'translateX(0)';
+            field.style.border = '1px solid #ddd';
+          }, 200);
+        });
         showError('Senhas não coincidem');
         return;
       }
 
       try {
-        auth.register(name, email, password);
+        // Animação de loading
+        submitButton.textContent = 'Cadastrando...';
+        submitButton.disabled = true;
+        submitButton.style.background = 'linear-gradient(135deg, #9aa0a6, #666)';
         
-        // Animação de sucesso
+        await auth.register(name, email, password);
+        
+        // Animação de sucesso aprimorada
         const form = document.querySelector('.auth-form');
-        form.style.transform = 'scale(1.05)';
-        form.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        const container = document.querySelector('.auth-container');
         
-        showSuccess('Cadastro realizado com sucesso!');
+        // Efeito de sucesso no botão
+        submitButton.textContent = '✓ Código Enviado!';
+        submitButton.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        submitButton.style.transform = 'scale(1.05)';
+        
+        // Animação do formulário
+        form.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        form.style.transform = 'scale(1.02)';
+        form.style.background = 'linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(69, 160, 73, 0.1))';
+        form.style.border = '2px solid #4CAF50';
+        form.style.boxShadow = '0 0 30px rgba(76, 175, 80, 0.3)';
+        
+        showSuccess('Código de verificação enviado! Redirecionando...');
+        
         setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 2000);
+          // Animação de saída
+          container.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+          container.style.transform = 'scale(0.8) translateY(-50px)';
+          container.style.opacity = '0';
+          
+          setTimeout(() => {
+            window.location.href = 'verify-email.html';
+          }, 400);
+        }, 1500);
+        
       } catch (error) {
+        // Reset do botão em caso de erro
+        submitButton.textContent = 'Cadastrar';
+        submitButton.disabled = false;
+        submitButton.style.background = '#667eea';
+        submitButton.style.transform = 'scale(1)';
+        
+        // Animação de erro
+        const form = document.querySelector('.auth-form');
+        form.style.transition = 'all 0.3s ease';
+        form.style.transform = 'translateX(-10px)';
+        form.style.border = '2px solid #e74c3c';
+        
+        setTimeout(() => {
+          form.style.transform = 'translateX(10px)';
+        }, 150);
+        
+        setTimeout(() => {
+          form.style.transform = 'translateX(0)';
+          form.style.border = '1px solid #ddd';
+        }, 300);
+        
         showError(error.message);
       }
     });
@@ -200,6 +324,29 @@ function showError(message) {
   }
   
   form.insertBefore(errorDiv, form.firstChild);
+  
+  // Adicionar classe de erro ao formulário para animação
+  form.classList.add('error');
+  
+  // Remover classe após animação
+  setTimeout(() => {
+    form.classList.remove('error');
+  }, 500);
+  
+  // Remover mensagem de erro após 5 segundos
+  setTimeout(() => {
+    if (errorDiv.parentNode) {
+      errorDiv.style.transition = 'all 0.3s ease';
+      errorDiv.style.opacity = '0';
+      errorDiv.style.transform = 'translateY(-10px)';
+      
+      setTimeout(() => {
+        if (errorDiv.parentNode) {
+          errorDiv.parentNode.removeChild(errorDiv);
+        }
+      }, 300);
+    }
+  }, 5000);
 }
 
 function showSuccess(message) {
@@ -214,6 +361,37 @@ function showSuccess(message) {
   }
   
   form.insertBefore(successDiv, form.firstChild);
+  
+  // Adicionar efeito de partículas
+  createSuccessParticles(form);
+}
+
+// Criar efeito de partículas de sucesso
+function createSuccessParticles(container) {
+  const particleCount = 12;
+  const containerRect = container.getBoundingClientRect();
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'success-particles';
+    
+    // Posição aleatória dentro do container
+    const x = Math.random() * containerRect.width;
+    const y = Math.random() * containerRect.height;
+    
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    particle.style.animationDelay = (Math.random() * 0.5) + 's';
+    
+    container.appendChild(particle);
+    
+    // Remover partícula após animação
+    setTimeout(() => {
+      if (particle.parentNode) {
+        particle.parentNode.removeChild(particle);
+      }
+    }, 1500);
+  }
 }
 
 async function logout() {

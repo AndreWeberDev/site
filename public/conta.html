@@ -12,18 +12,30 @@
   <link rel="stylesheet" href="./css/accessibility.css">
 </head>
 <body>
-  <div class="sidebar">
+  <button class="sidebar-toggle" onclick="toggleSidebar()">
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+  </button>
+
+  <div class="sidebar hidden" id="sidebar">
     <div class="sidebar-header">
       <h2>Menu</h2>
+      <button class="sidebar-close" onclick="toggleSidebar()">×</button>
     </div>
     <nav class="sidebar-nav">
       <!-- Menu será carregado dinamicamente -->
     </nav>
   </div>
 
-  <div class="main-content">
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <div class="main-content" id="mainContent">
     <header>
-      <h1>Sua Conta</h1>
+      <div class="header-logo">
+        <img src="./assets/logo/AJ_Logo_Design_4.jpg" alt="AJ Logo" class="logo">
+        <h1>Sua Conta</h1>
+      </div>
     </header>
 
     <main>

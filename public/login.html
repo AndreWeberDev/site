@@ -5,11 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - André Junior</title>
   <link rel="icon" type="image/jpeg" href="./assets/logo/AJ_Logo_Design_4.jpg">
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/auth.css">
   <link rel="stylesheet" href="./css/animations.css">
+  <link rel="stylesheet" href="./css/login-animations.css">
   <link rel="stylesheet" href="./css/accessibility.css">
 </head>
 <body>
+  <button class="sidebar-toggle" onclick="toggleSidebar()">
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+  </button>
+
+  <div class="sidebar hidden" id="sidebar">
+    <div class="sidebar-header">
+      <h2>Menu</h2>
+      <button class="sidebar-close" onclick="toggleSidebar()">×</button>
+    </div>
+    <nav class="sidebar-nav">
+      <!-- Menu será carregado dinamicamente -->
+    </nav>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
   <div class="auth-container">
     <div class="auth-form">
       <h2>Login</h2>

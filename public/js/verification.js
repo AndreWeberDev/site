@@ -79,20 +79,22 @@ class EmailVerification {
   }
 
   async completeVerification() {
-    if (!this.pendingUser) {
+    const pendingUser = JSON.parse(localStorage.getItem('pendingUser'));
+    
+    if (!pendingUser) {
       throw new Error('Usuário não encontrado.');
     }
     
     // Marcar usuário como verificado
-    this.pendingUser.verified = true;
+    pendingUser.verified = true;
     
-    // Salvar no banco de dados
-    await auth.db.saveUser(this.pendingUser);
+    // Completar registro no sistema de autenticação
+    const user = auth.completeRegistration(pendingUser);
     
     // Limpar dados temporários
     this.clearVerificationData();
     
-    return this.pendingUser;
+    return user;
   }
 
   clearVerificationData() {
@@ -102,11 +104,13 @@ class EmailVerification {
   }
 
   async resendCode() {
-    if (!this.pendingUser) {
+    const pendingUser = JSON.parse(localStorage.getItem('pendingUser'));
+    
+    if (!pendingUser) {
       throw new Error('Usuário não encontrado.');
     }
     
-    return await this.sendVerificationCode(this.pendingUser.email, this.pendingUser.name);
+    return await this.sendVerificationCode(pendingUser.email, pendingUser.name);
   }
 }
 
@@ -256,5 +260,65 @@ async function resendCode() {
     showError(error.message);
     resendBtn.disabled = false;
     resendBtn.textContent = 'Reenviar código';
+  }
+}
+
+// Criar efeito de partículas de sucesso
+function createSuccessParticles(container) {
+  const particleCount = 20;
+  const containerRect = container.getBoundingClientRect();
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'success-particles';
+    
+    const x = Math.random() * containerRect.width;
+    const y = Math.random() * containerRect.height;
+    const size = Math.random() * 6 + 4;
+    const duration = Math.random() * 1000 + 1500;
+    
+    particle.style.cssText = `
+      position: absolute;
+      left: ${x}px;
+      top: ${y}px;
+      width: ${size}px;
+      height: ${size}px;
+      background: radial-gradient(circle, #4CAF50, #45a049);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1000;
+      animation: particleFloat ${duration}ms ease-out forwards;
+      animation-delay: ${Math.random() * 500}ms;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+    `;
+    
+    container.appendChild(particle);
+    
+    setTimeout(() => {
+      if (particle.parentNode) {
+        particle.parentNode.removeChild(particle);
+      }
+    }, duration + 500);
+  }
+  
+  if (!document.getElementById('particle-animation-css')) {
+    const style = document.createElement('style');
+    style.id = 'particle-animation-css';
+    style.textContent = `
+      @keyframes particleFloat {
+        0% {
+          opacity: 1;
+          transform: translateY(0) scale(0);
+        }
+        10% {
+          transform: translateY(-10px) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100px) scale(0.5);
+        }
+      }
+    `;
+    document.head.appendChild(style);
   }
 }

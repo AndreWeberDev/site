@@ -11,29 +11,30 @@
   <link rel="stylesheet" href="./css/accessibility.css">
 </head>
 <body>
-  <div class="sidebar">
+  <button class="sidebar-toggle" onclick="toggleSidebar()">
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+  </button>
+
+  <div class="sidebar hidden" id="sidebar">
     <div class="sidebar-header">
-      <h2>Admin</h2>
+      <h2>Menu</h2>
+      <button class="sidebar-close" onclick="toggleSidebar()">×</button>
     </div>
     <nav class="sidebar-nav">
-      <a href="./index.html" class="nav-item">
-        <span class="nav-icon">🏠</span>
-        <span class="nav-text">Home</span>
-      </a>
-      <a href="./admin.html" class="nav-item active">
-        <span class="nav-icon">⚙️</span>
-        <span class="nav-text">Admin</span>
-      </a>
-      <a href="#" class="nav-item" onclick="logout()">
-        <span class="nav-icon">🚪</span>
-        <span class="nav-text">Sair</span>
-      </a>
+      <!-- Menu será carregado dinamicamente -->
     </nav>
   </div>
 
-  <div class="main-content">
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <div class="main-content" id="mainContent">
     <header>
-      <h1>Painel Administrativo</h1>
+      <div class="header-logo">
+        <img src="./assets/logo/AJ_Logo_Design_4.jpg" alt="AJ Logo" class="logo">
+        <h1>Painel Administrativo</h1>
+      </div>
       <span id="userInfo"></span>
     </header>
 

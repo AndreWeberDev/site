@@ -1,0 +1,231 @@
+/* Animações específicas para login e registro */
+
+/* Animação de entrada do formulário */
+@keyframes authFormEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    filter: blur(2px);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(10px) scale(0.98);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Animação de sucesso */
+@keyframes authSuccess {
+  0% {
+    transform: scale(1);
+    background: white;
+    border-color: #ddd;
+  }
+  25% {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.05), rgba(69, 160, 73, 0.05));
+    border-color: #4CAF50;
+  }
+  50% {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(69, 160, 73, 0.1));
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+  }
+  100% {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(69, 160, 73, 0.1));
+    border-color: #4CAF50;
+    box-shadow: 0 0 30px rgba(76, 175, 80, 0.3);
+  }
+}
+
+/* Animação de erro */
+@keyframes authError {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Animação de saída */
+@keyframes authExit {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.95) translateY(-20px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-50px);
+  }
+}
+
+/* Aplicar animações */
+.auth-container {
+  animation: authFormEnter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.auth-form.success {
+  animation: authSuccess 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.auth-form.error {
+  animation: authError 0.5s ease-in-out;
+}
+
+.auth-container.exit {
+  animation: authExit 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Animação de digitação para inputs */
+.auth-form input {
+  position: relative;
+}
+
+.auth-form input:focus {
+  animation: inputFocus 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes inputFocus {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(138, 180, 248, 0);
+  }
+  50% {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(138, 180, 248, 0.2);
+  }
+  100% {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(138, 180, 248, 0.4);
+  }
+}
+
+/* Animação de loading no botão */
+@keyframes buttonLoading {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.auth-form button.loading {
+  background: linear-gradient(45deg, #9aa0a6, #666, #9aa0a6, #666);
+  background-size: 400% 400%;
+  animation: buttonLoading 2s ease infinite;
+}
+
+/* Animação de sucesso no botão */
+@keyframes buttonSuccess {
+  0% {
+    transform: scale(1);
+    background: #667eea;
+  }
+  50% {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+  }
+  100% {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+  }
+}
+
+.auth-form button.success {
+  animation: buttonSuccess 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Efeito de partículas de sucesso */
+@keyframes particles {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-20px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.5);
+  }
+}
+
+.success-particles {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #4CAF50;
+  border-radius: 50%;
+  animation: particles 1.5s ease-out;
+  pointer-events: none;
+}
+
+/* Animação de mensagens de erro/sucesso */
+@keyframes messageSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.error, .success {
+  animation: messageSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  @keyframes authFormEnter {
+    0% {
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  .auth-form input:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(138, 180, 248, 0.3);
+  }
+}
+
+/* Reduzir animações para usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .auth-container,
+  .auth-form.success,
+  .auth-form.error,
+  .auth-container.exit,
+  .auth-form input:focus,
+  .auth-form button.loading,
+  .auth-form button.success,
+  .success-particles,
+  .error,
+  .success {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .auth-form input:focus {
+    transform: none;
+    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.4);
+  }
+}

@@ -1,27 +1,35 @@
 // Sistema de menu lateral dinâmico com animações
 function updateSidebar() {
   const sidebarNav = document.querySelector('.sidebar-nav');
-  if (!sidebarNav) return;
+  if (!sidebarNav) {
+    console.warn('Sidebar nav não encontrado');
+    return;
+  }
 
-  const isLoggedIn = auth.isLoggedIn();
-  const isAdmin = auth.isAdmin();
+  const isLoggedIn = auth && auth.isLoggedIn();
+  const isAdmin = auth && auth.isAdmin();
   
-  // Animação de saída
+  // Animação de saída mais suave
+  sidebarNav.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
   sidebarNav.style.opacity = '0';
   sidebarNav.style.transform = 'translateX(-20px)';
   
   setTimeout(() => {
-    // Menu base
+    // Obter caminho atual de forma mais robusta
+    const currentPath = window.location.pathname.toLowerCase();
+    const currentPage = currentPath.split('/').pop() || 'index.html';
+    
+    // Menu base com verificação melhorada de página ativa
     let menuItems = `
-      <a href="./index.html" class="nav-item ${window.location.pathname.includes('index.html') || window.location.pathname === '/' ? 'active' : ''}" onclick="handleNavClick(event, './index.html')">
+      <a href="./index.html" class="nav-item ${currentPage === 'index.html' || currentPage === '' || currentPath === '/' ? 'active' : ''}" onclick="handleNavClick(event, './index.html')">
         <span class="nav-icon">🏠</span>
         <span class="nav-text">Home</span>
       </a>
-      <a href="./meusProjetos.html" class="nav-item ${window.location.pathname.includes('meusProjetos.html') ? 'active' : ''}" onclick="handleNavClick(event, './meusProjetos.html')">
+      <a href="./meusProjetos.html" class="nav-item ${currentPage === 'meusprojetos.html' ? 'active' : ''}" onclick="handleNavClick(event, './meusProjetos.html')">
         <span class="nav-icon">💼</span>
         <span class="nav-text">Projetos</span>
       </a>
-      <a href="./contatos.html" class="nav-item ${window.location.pathname.includes('contatos.html') ? 'active' : ''}" onclick="handleNavClick(event, './contatos.html')">
+      <a href="./contatos.html" class="nav-item ${currentPage === 'contatos.html' ? 'active' : ''}" onclick="handleNavClick(event, './contatos.html')">
         <span class="nav-icon">📞</span>
         <span class="nav-text">Contatos</span>
       </a>
@@ -31,18 +39,18 @@ function updateSidebar() {
       // Menu para usuários logados
       if (isAdmin) {
         menuItems += `
-          <a href="./admin.html" class="nav-item ${window.location.pathname.includes('admin.html') ? 'active' : ''}" onclick="handleNavClick(event, './admin.html')">
+          <a href="./admin.html" class="nav-item ${currentPage === 'admin.html' ? 'active' : ''}" onclick="handleNavClick(event, './admin.html')">
             <span class="nav-icon">⚙️</span>
             <span class="nav-text">Admin</span>
           </a>
         `;
       }
       menuItems += `
-        <a href="./conta.html" class="nav-item ${window.location.pathname.includes('conta.html') ? 'active' : ''}" onclick="handleNavClick(event, './conta.html')">
+        <a href="./conta.html" class="nav-item ${currentPage === 'conta.html' ? 'active' : ''}" onclick="handleNavClick(event, './conta.html')">
           <span class="nav-icon">👤</span>
           <span class="nav-text">Sua Conta</span>
         </a>
-        <a href="#" class="nav-item" onclick="handleLogout(event)">
+        <a href="#" class="nav-item logout-item" onclick="handleLogout(event)">
           <span class="nav-icon">🚪</span>
           <span class="nav-text">Sair</span>
         </a>
@@ -50,11 +58,11 @@ function updateSidebar() {
     } else {
       // Menu para usuários não logados
       menuItems += `
-        <a href="./login.html" class="nav-item ${window.location.pathname.includes('login.html') ? 'active' : ''}" onclick="handleNavClick(event, './login.html')">
+        <a href="./login.html" class="nav-item ${currentPage === 'login.html' ? 'active' : ''}" onclick="handleNavClick(event, './login.html')">
           <span class="nav-icon">🔑</span>
           <span class="nav-text">Login</span>
         </a>
-        <a href="./register.html" class="nav-item ${window.location.pathname.includes('register.html') ? 'active' : ''}" onclick="handleNavClick(event, './register.html')">
+        <a href="./register.html" class="nav-item ${currentPage === 'register.html' ? 'active' : ''}" onclick="handleNavClick(event, './register.html')">
           <span class="nav-icon">📝</span>
           <span class="nav-text">Cadastro</span>
         </a>
@@ -63,18 +71,18 @@ function updateSidebar() {
 
     sidebarNav.innerHTML = menuItems;
     
-    // Adicionar avatar se logado
-    if (isLoggedIn && auth.currentUser.avatar) {
+    // Adicionar avatar se logado e existir
+    if (isLoggedIn && auth.currentUser && auth.currentUser.avatar) {
       const avatarSection = document.createElement('div');
       avatarSection.className = 'sidebar-avatar';
-      avatarSection.innerHTML = `<img src="${auth.currentUser.avatar}" alt="Avatar">`;
+      avatarSection.innerHTML = `<img src="${auth.currentUser.avatar}" alt="Avatar" onerror="this.style.display='none'">`;
       sidebarNav.appendChild(avatarSection);
     }
     
     // Adicionar link de configurações para todos os usuários
     const configLink = document.createElement('a');
     configLink.href = './configuracoes.html';
-    configLink.className = `nav-item ${window.location.pathname.includes('configuracoes.html') ? 'active' : ''}`;
+    configLink.className = `nav-item ${currentPage === 'configuracoes.html' ? 'active' : ''}`;
     configLink.onclick = (e) => { handleNavClick(e, './configuracoes.html'); closeSidebarOnNavigation(); };
     configLink.innerHTML = `
       <span class="nav-icon">⚙️</span>
@@ -115,18 +123,39 @@ function handleNavClick(event, url) {
   }, 400);
 }
 
-// Logout com animação
+// Logout com animação aprimorada
 function handleLogout(event) {
   event.preventDefault();
   
   const navItem = event.currentTarget;
-  navItem.style.transform = 'scale(0.95)';
+  const sidebar = document.getElementById('sidebar');
+  
+  // Animação do item de logout
+  navItem.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  navItem.style.transform = 'scale(0.95) translateX(-10px)';
+  navItem.style.background = 'rgba(255, 107, 107, 0.2)';
+  
+  // Animação da sidebar
+  if (sidebar) {
+    sidebar.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    sidebar.style.transform = 'translateX(-20px) scale(0.98)';
+    sidebar.style.opacity = '0.8';
+  }
   
   setTimeout(() => {
-    auth.logout();
-    refreshSidebar();
-    handleNavClick(event, 'index.html');
-  }, 200);
+    if (auth && typeof auth.logout === 'function') {
+      auth.logout();
+    }
+    
+    // Fechar sidebar após logout
+    closeSidebarOnNavigation();
+    
+    // Atualizar sidebar e redirecionar
+    setTimeout(() => {
+      refreshSidebar();
+      window.location.href = 'index.html';
+    }, 200);
+  }, 300);
 }
 
 // Adicionar efeitos de ripple aos itens do menu
@@ -159,16 +188,25 @@ function createNavRipple(e) {
   setTimeout(() => ripple.remove(), 600);
 }
 
-// Fechar sidebar ao clicar em link
+// Fechar sidebar ao clicar em link com animação
 function closeSidebarOnNavigation() {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
   const toggleBtn = document.querySelector('.sidebar-toggle');
   
-  sidebar.classList.remove('active');
-  sidebar.classList.add('hidden');
-  overlay.classList.remove('active');
-  toggleBtn.classList.remove('active');
+  if (sidebar) {
+    sidebar.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    sidebar.classList.remove('active');
+    sidebar.classList.add('hidden');
+  }
+  
+  if (overlay) {
+    overlay.classList.remove('active');
+  }
+  
+  if (toggleBtn) {
+    toggleBtn.classList.remove('active');
+  }
 }
 
 // Fechar sidebar com ESC
@@ -189,35 +227,75 @@ document.addEventListener('DOMContentLoaded', function() {
     mainContent.classList.add('page-transition-enter');
   }
   
-  // Sidebar inicia fechado
-  const sidebar = document.getElementById('sidebar');
-  if (sidebar) {
-    sidebar.classList.add('hidden');
-  }
+  // Inicializar sidebar corretamente
+  initializeSidebar();
   
-  updateSidebar();
+  // Atualizar conteúdo da sidebar
+  setTimeout(() => {
+    updateSidebar();
+  }, 100);
 });
 
-// Toggle sidebar estilo GitHub
+// Inicializar sidebar
+function initializeSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggleBtn = document.querySelector('.sidebar-toggle');
+  
+  if (sidebar) {
+    sidebar.classList.add('hidden');
+    sidebar.classList.remove('active');
+  }
+  
+  if (overlay) {
+    overlay.classList.remove('active');
+  }
+  
+  if (toggleBtn) {
+    toggleBtn.classList.remove('active');
+  }
+}
+
+// Toggle sidebar estilo GitHub com animações aprimoradas
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
   const toggleBtn = document.querySelector('.sidebar-toggle');
   
+  if (!sidebar || !overlay || !toggleBtn) {
+    console.warn('Elementos da sidebar não encontrados');
+    return;
+  }
+  
   const isActive = sidebar.classList.contains('active');
   
+  // Animação do botão toggle
+  toggleBtn.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  
   if (isActive) {
-    // Fechar sidebar
+    // Fechar sidebar com animação
+    sidebar.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     sidebar.classList.remove('active');
     sidebar.classList.add('hidden');
     overlay.classList.remove('active');
     toggleBtn.classList.remove('active');
+    toggleBtn.style.transform = 'scale(0.95)';
+    
+    setTimeout(() => {
+      toggleBtn.style.transform = 'scale(1)';
+    }, 200);
   } else {
-    // Abrir sidebar
+    // Abrir sidebar com animação
+    sidebar.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     sidebar.classList.remove('hidden');
     sidebar.classList.add('active');
     overlay.classList.add('active');
     toggleBtn.classList.add('active');
+    toggleBtn.style.transform = 'scale(1.05)';
+    
+    setTimeout(() => {
+      toggleBtn.style.transform = 'scale(1)';
+    }, 200);
   }
 }
 
