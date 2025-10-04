@@ -1,2 +1,1 @@
-site feito totalmente por mim! Desfrutem!
-
+site feito totalmente por mim! Desfrutem e me contratem, se quiser! kk
