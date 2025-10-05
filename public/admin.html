@@ -39,23 +39,111 @@
     </header>
 
     <main>
-      <div class="admin-section">
-        <h2>Gerenciar Projetos</h2>
+      <!-- Abas de navegação -->
+      <div class="admin-tabs">
+        <button class="tab-btn active" onclick="switchTab('projects')">📁 Projetos</button>
+        <button class="tab-btn" onclick="switchTab('contacts')">📞 Contatos</button>
+        <button class="tab-btn" onclick="switchTab('settings')">⚙️ Configurações</button>
+      </div>
+
+      <!-- Seção de Projetos -->
+      <div id="projects-tab" class="admin-section tab-content active">
+        <h2>🚀 Gerenciar Projetos</h2>
         
-        <div class="project-form">
-          <h3>Adicionar Projeto</h3>
+        <div class="form-container">
+          <h3>Adicionar Novo Projeto</h3>
           <form id="addProjectForm">
-            <input type="text" id="projectTitle" placeholder="Título do projeto" required>
-            <textarea id="projectDescription" placeholder="Descrição do projeto" required></textarea>
-            <input type="url" id="projectLink" placeholder="Link do projeto">
-            <input type="text" id="projectImage" placeholder="URL da imagem">
-            <button type="submit">Adicionar Projeto</button>
+            <div class="form-row">
+              <input type="text" id="projectTitle" placeholder="Título do projeto" required>
+              <select id="projectCategory">
+                <option value="web">🌐 Web</option>
+                <option value="game">🎮 Game</option>
+                <option value="mobile">📱 Mobile</option>
+                <option value="other">🔧 Outro</option>
+              </select>
+            </div>
+            <textarea id="projectDescription" placeholder="Descrição detalhada do projeto" required></textarea>
+            <div class="form-row">
+              <input type="url" id="projectLink" placeholder="Link do projeto (GitHub, Demo, etc.)">
+              <input type="text" id="projectTech" placeholder="Tecnologias (ex: HTML, CSS, JS)">
+            </div>
+            <input type="text" id="projectImage" placeholder="URL da imagem (opcional)">
+            <button type="submit">✨ Adicionar Projeto</button>
           </form>
         </div>
 
-        <div class="projects-list">
-          <h3>Projetos Existentes</h3>
-          <div id="projectsList"></div>
+        <div class="projects-grid" id="projectsList">
+          <!-- Projetos serão carregados aqui -->
+        </div>
+      </div>
+
+      <!-- Seção de Contatos -->
+      <div id="contacts-tab" class="admin-section tab-content">
+        <h2>📞 Gerenciar Contatos</h2>
+        
+        <div class="form-container">
+          <h3>Adicionar Contato</h3>
+          <form id="addContactForm">
+            <div class="form-row">
+              <input type="text" id="contactName" placeholder="Nome/Plataforma" required>
+              <select id="contactType">
+                <option value="email">📧 Email</option>
+                <option value="phone">📱 Telefone</option>
+                <option value="social">🌐 Rede Social</option>
+                <option value="professional">💼 Profissional</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <input type="text" id="contactValue" placeholder="Email, telefone, link, etc." required>
+              <input type="text" id="contactIcon" placeholder="Emoji ou ícone (opcional)">
+            </div>
+            <textarea id="contactDescription" placeholder="Descrição (opcional)"></textarea>
+            <label class="checkbox-label">
+              <input type="checkbox" id="contactPublic" checked>
+              <span>Tornar público no site</span>
+            </label>
+            <button type="submit">📝 Adicionar Contato</button>
+          </form>
+        </div>
+
+        <div class="contacts-list" id="contactsList">
+          <!-- Contatos serão carregados aqui -->
+        </div>
+      </div>
+
+      <!-- Seção de Configurações -->
+      <div id="settings-tab" class="admin-section tab-content">
+        <h2>⚙️ Configurações do Site</h2>
+        
+        <div class="form-container">
+          <h3>Informações Pessoais</h3>
+          <form id="settingsForm">
+            <input type="text" id="siteName" placeholder="Nome do site" value="André Junior">
+            <textarea id="siteDescription" placeholder="Descrição/Bio">Desenvolvedor em formação apaixonado por tecnologia</textarea>
+            <input type="text" id="siteTheme" placeholder="Tema de cores" value="blue">
+            <button type="submit">💾 Salvar Configurações</button>
+          </form>
+        </div>
+        
+        <div class="form-container">
+          <h3>🔧 Ações Administrativas</h3>
+          <div class="admin-actions">
+            <button class="export-btn" onclick="exportData()">📥 Exportar Dados</button>
+            
+            <div class="file-input-wrapper">
+              <input type="file" id="importFile" accept=".json" onchange="importData(event)">
+              <label for="importFile" class="file-input-label">📤 Importar Dados</label>
+            </div>
+            
+            <button class="stats-btn" onclick="showStats()">📈 Estatísticas</button>
+            <button class="clear-btn" onclick="clearAllData()">🗑️ Limpar Tudo</button>
+          </div>
+          
+          <div style="margin-top: 15px; padding: 10px; background: rgba(255, 193, 7, 0.1); border-radius: 6px; border: 1px solid rgba(255, 193, 7, 0.3);">
+            <p style="color: #ffc107; font-size: 12px; margin: 0;">
+              ⚠️ <strong>Dica:</strong> Sempre faça backup dos seus dados antes de fazer alterações importantes!
+            </p>
+          </div>
         </div>
       </div>
     </main>
@@ -65,6 +153,7 @@
   <script src="./js/auth.js"></script>
   <script src="./js/sidebar.js"></script>
   <script src="./js/animations.js"></script>
+  <script src="./js/admin-helpers.js"></script>
   <script src="./js/admin.js"></script>
 </body>
 </html>

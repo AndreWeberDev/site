@@ -7,19 +7,35 @@ class AuthSystem {
   }
 
   initializeAdmin() {
-    // Criar conta admin se não existir
-    const adminExists = this.users.find(user => user.email === 'andre@admin.com');
-    if (!adminExists) {
-      this.users.push({
-        id: 1,
-        name: 'André Junior',
-        email: 'andre@admin.com',
-        password: 'Naui2742',
-        isAdmin: true,
-        verified: true
-      });
-      localStorage.setItem('users', JSON.stringify(this.users));
-    }
+    // Forçar recriação do admin para garantir que existe
+    const adminUser = {
+      id: 1,
+      name: 'André Junior',
+      email: 'andre@admin.com',
+      password: 'Naui2742',
+      isAdmin: true,
+      verified: true
+    };
+    
+    // Remover admin existente se houver
+    this.users = this.users.filter(user => user.email !== 'andre@admin.com');
+    
+    // Adicionar admin atualizado
+    this.users.unshift(adminUser); // Adiciona no início
+    localStorage.setItem('users', JSON.stringify(this.users));
+    
+    console.log('Admin inicializado:', adminUser);
+    console.log('Todos os usuários:', this.users);
+  }
+  
+  // Função para resetar o sistema (para debug)
+  resetSystem() {
+    localStorage.removeItem('users');
+    localStorage.removeItem('currentUser');
+    this.users = [];
+    this.currentUser = null;
+    this.initializeAdmin();
+    console.log('Sistema resetado!');
   }
 
   validatePassword(password) {
@@ -56,7 +72,7 @@ class AuthSystem {
     return null;
   }
 
-  async register(name, email, password) {
+  register(name, email, password) {
     if (this.users.find(user => user.email === email)) {
       throw new Error('Email já cadastrado');
     }
@@ -69,35 +85,30 @@ class AuthSystem {
       email,
       password,
       isAdmin: false,
-      verified: false
+      verified: true // Simplificando - verificação automática
     };
 
-    // Salvar usuário como pendente
-    localStorage.setItem('pendingUser', JSON.stringify(user));
-    
-    // Enviar código de verificação
-    const verification = new EmailVerification();
-    await verification.sendVerificationCode(email, name);
-    
-    return user;
-  }
-
-  completeRegistration(user) {
-    // Adicionar usuário verificado ao banco
     this.users.push(user);
     localStorage.setItem('users', JSON.stringify(this.users));
-    
-    // Limpar dados pendentes
-    localStorage.removeItem('pendingUser');
     
     return user;
   }
 
   login(email, password) {
+    console.log('Tentativa de login:', { email, password });
+    console.log('Usuários disponíveis:', this.users);
+    
     const user = this.users.find(u => u.email === email && u.password === password);
+    console.log('Usuário encontrado:', user);
     
     if (!user) {
-      throw new Error('Email ou senha incorretos');
+      // Verificar se o email existe
+      const emailExists = this.users.find(u => u.email === email);
+      if (emailExists) {
+        throw new Error('Senha incorreta');
+      } else {
+        throw new Error('Email não encontrado');
+      }
     }
 
     if (!user.verified && !user.isAdmin) {
@@ -106,6 +117,7 @@ class AuthSystem {
 
     this.currentUser = user;
     localStorage.setItem('currentUser', JSON.stringify(user));
+    console.log('Login bem-sucedido:', user);
     return user;
   }
 
@@ -133,6 +145,35 @@ class AuthSystem {
 
 const auth = new AuthSystem();
 
+// Funções globais para debug
+window.debugAuth = {
+  resetSystem: () => auth.resetSystem(),
+  showUsers: () => console.table(auth.users),
+  testLogin: (email = 'andre@admin.com', password = 'Naui2742') => {
+    try {
+      const result = auth.login(email, password);
+      console.log('✅ Login bem-sucedido:', result);
+      return result;
+    } catch (error) {
+      console.error('❌ Erro no login:', error.message);
+      return null;
+    }
+  },
+  createTestUser: () => {
+    try {
+      const result = auth.register('Teste User', 'teste@teste.com', 'Teste123!');
+      console.log('✅ Usuário de teste criado:', result);
+      return result;
+    } catch (error) {
+      console.error('❌ Erro ao criar usuário:', error.message);
+      return null;
+    }
+  }
+};
+
+console.log('🔧 Debug disponível em window.debugAuth');
+console.log('Comandos: resetSystem(), showUsers(), testLogin(), createTestUser()');
+
 // Event listeners para formulários
 document.addEventListener('DOMContentLoaded', function() {
   const loginForm = document.getElementById('loginForm');
@@ -146,10 +187,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const submitButton = loginForm.querySelector('button[type="submit"]');
 
       try {
+        // Limpar mensagens anteriores
+        const existingError = document.querySelector('.error');
+        if (existingError) existingError.remove();
+        
         // Animação de loading
         submitButton.textContent = 'Entrando...';
         submitButton.disabled = true;
         submitButton.style.background = 'linear-gradient(135deg, #9aa0a6, #666)';
+        
+        // Pequeno delay para mostrar o loading
+        await new Promise(resolve => setTimeout(resolve, 500));
         
         const rememberMe = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : false;
         const user = auth.login(email, password);
@@ -253,14 +301,14 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.style.background = 'linear-gradient(135deg, #9aa0a6, #666)';
         
-        await auth.register(name, email, password);
+        auth.register(name, email, password);
         
         // Animação de sucesso aprimorada
         const form = document.querySelector('.auth-form');
         const container = document.querySelector('.auth-container');
         
         // Efeito de sucesso no botão
-        submitButton.textContent = '✓ Código Enviado!';
+        submitButton.textContent = '✓ Cadastrado!';
         submitButton.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
         submitButton.style.transform = 'scale(1.05)';
         
@@ -271,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
         form.style.border = '2px solid #4CAF50';
         form.style.boxShadow = '0 0 30px rgba(76, 175, 80, 0.3)';
         
-        showSuccess('Código de verificação enviado! Redirecionando...');
+        showSuccess('Cadastro realizado com sucesso! Redirecionando para o login...');
         
         setTimeout(() => {
           // Animação de saída
@@ -280,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
           container.style.opacity = '0';
           
           setTimeout(() => {
-            window.location.href = 'verify-email.html';
+            window.location.href = 'login.html';
           }, 400);
         }, 1500);
         

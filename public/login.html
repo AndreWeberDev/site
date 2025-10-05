@@ -44,6 +44,14 @@
       </form>
       <p>Não tem conta? <a href="register.html">Cadastre-se</a></p>
       <p><a href="index.html">Voltar ao site</a></p>
+      
+      <!-- Botão de debug temporário -->
+      <div style="margin-top: 20px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; font-size: 12px;">
+        <p style="color: #8ab4f8; margin-bottom: 10px;">🔧 Debug (temporário):</p>
+        <button type="button" onclick="auth.resetSystem()" style="background: #ff6b6b; color: white; border: none; padding: 5px 10px; border-radius: 3px; margin-right: 5px; cursor: pointer;">Reset Sistema</button>
+        <button type="button" onclick="console.log('Usuários:', auth.users)" style="background: #4ecdc4; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Ver Usuários</button>
+        <p style="margin-top: 5px; color: #9aa0a6;">Admin: andre@admin.com / Naui2742</p>
+      </div>
     </div>
   </div>
   <script src="./js/database.js"></script>
