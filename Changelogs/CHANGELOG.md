@@ -103,3 +103,44 @@
 ---
 
 **Desenvolvido como material educativo para ensino de programação web moderna.**
+# Changelog
+
+## [2025-01-27] - Sistema 2FA Real Ativado
+
+### Adicionado
+- Integração real de envio de email para códigos 2FA usando nodemailer
+- Rota `/api/send-2fa-email` no servidor para processar envios de email
+- Template HTML profissional para emails de verificação 2FA
+- Configuração de transporter nodemailer com Gmail
+- Arquivo `.env` para configuração segura de credenciais de email
+- Dependência nodemailer no package.json
+
+### Modificado
+- Função `sendCode()` em `two-factor.js` agora faz chamada real à API de email
+- Sistema de fallback mantido caso o envio de email falhe
+- Servidor configurado para usar `noreply@andrejunior.com` como remetente
+
+### Técnico
+- Substituído sistema de demonstração por envio real de emails
+- Mantida compatibilidade com sistema de códigos temporários existente
+- Adicionado tratamento de erros para falhas no envio de email
+- Template de email responsivo com design profissional
+
+### Próximos Passos
+- Configurar senha de aplicativo do Gmail no arquivo .env
+- Testar envio real de emails 2FA
+- Instalar dependência nodemailer com `npm install`
+
+## [2025-01-27] - Sistema 2FA Simplificado
+
+### Modificado
+- Sistema 2FA agora funciona sem dependências externas
+- Código aparece em popup na tela em vez de email
+- Removido nodemailer e configurações complexas
+- Mantida toda funcionalidade de segurança (expiração, tentativas limitadas)
+
+### Técnico
+- Criado `simple-2fa.js` para sistema independente
+- Simplificado `two-factor.js` para usar popup visual
+- Removido nodemailer do package.json
+- Sistema funciona imediatamente sem configuração

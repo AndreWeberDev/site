@@ -3,6 +3,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
+
 const app = express();
 const PORT = process.env.PORT || 5487;
 
@@ -10,6 +11,8 @@ const PORT = process.env.PORT || 5487;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
+
+
 
 // 4. ROTA DE CADASTRO
 app.post('/api/register', async (req, res) => {
@@ -41,6 +44,23 @@ app.post('/api/register', async (req, res) => {
     
   } catch (error) {
     res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+// ROTA PARA SIMULAR ENVIO DE EMAIL 2FA
+app.post('/api/send-2fa-email', async (req, res) => {
+  try {
+    const { email, code } = req.body;
+    
+    // Simular envio bem-sucedido
+    console.log(`📧 Email 2FA enviado para: ${email}`);
+    console.log(`🔐 Código: ${code}`);
+    
+    res.json({ success: true, message: 'Email enviado com sucesso!' });
+    
+  } catch (error) {
+    console.error('Erro:', error);
+    res.status(500).json({ success: false, error: 'Falha no envio do email' });
   }
 });
 

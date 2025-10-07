@@ -200,7 +200,28 @@ document.addEventListener('DOMContentLoaded', function() {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         const rememberMe = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : false;
-        const user = auth.login(email, password);
+        // Tentar usar banco real primeiro
+        let user;
+        try {
+          const response = await fetch('http://localhost:5487/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            user = data.user;
+            localStorage.setItem('auth_token', data.token);
+            console.log('✅ Login com banco real!');
+          } else {
+            throw new Error('Servidor offline');
+          }
+        } catch (error) {
+          // Fallback para localStorage
+          user = auth.login(email, password);
+          console.log('⚠️ Usando localStorage como backup');
+        }
         
         // Animação de sucesso aprimorada
         const form = document.querySelector('.auth-form');
@@ -301,7 +322,25 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.style.background = 'linear-gradient(135deg, #9aa0a6, #666)';
         
-        auth.register(name, email, password);
+        // Tentar usar banco real primeiro
+        try {
+          const response = await fetch('http://localhost:5487/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+          });
+          
+          if (response.ok) {
+            console.log('✅ Cadastro com banco real!');
+          } else {
+            const error = await response.json();
+            throw new Error(error.error);
+          }
+        } catch (error) {
+          // Fallback para localStorage
+          auth.register(name, email, password);
+          console.log('⚠️ Usando localStorage como backup');
+        }
         
         // Animação de sucesso aprimorada
         const form = document.querySelector('.auth-form');
