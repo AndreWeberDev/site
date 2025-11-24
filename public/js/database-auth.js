@@ -111,16 +111,30 @@ const dbAuth = new DatabaseAuth();
 // Função para testar conexão
 async function testConnection() {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    
     const response = await fetch('http://localhost:5487/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: 'test', password: 'test' })
+      body: JSON.stringify({ email: 'test', password: 'test' }),
+      signal: controller.signal
     });
     
-    console.log('✅ Servidor conectado!');
-    return true;
+    clearTimeout(timeoutId);
+    
+    if (response.status === 401 || response.status === 400) {
+      console.log('✅ Servidor conectado!');
+      return true;
+    }
+    
+    return response.ok;
   } catch (error) {
-    console.log('❌ Servidor offline - usando localStorage');
+    if (error.name === 'AbortError') {
+      console.log('❌ Timeout - Servidor offline');
+    } else {
+      console.log('❌ Servidor offline - usando localStorage');
+    }
     return false;
   }
 }

@@ -40,12 +40,19 @@
 
         <main>
             <div class="login-required" id="loginRequired" style="display: none;">
-                <h2>Acesso Restrito</h2>
-                <p>Você precisa fazer login para entrar em contato.</p>
-                <a href="login.html" class="btncard">Fazer Login</a>
+                <div class="auth-notice">
+                    <h2>🔒 Acesso Restrito</h2>
+                    <p>Para acessar meus contatos e entrar em contato comigo, você precisa ter uma conta.</p>
+                    <p class="notice-subtitle">Já tem uma conta? Faça login. É novo por aqui? Cadastre-se gratuitamente!</p>
+                    <div class="auth-buttons">
+                        <a href="login.html" class="btn-login">Fazer Login</a>
+                        <a href="register.html" class="btn-register">Criar Conta</a>
+                    </div>
+                    <p class="back-link"><a href="index.html">← Voltar ao início</a></p>
+                </div>
             </div>
             
-            <div class="contacts-content" id="contactsContent" style="display: none;">
+            <div class="contacts-content" id="contactsContent">
             <section class="social">
                 <div class="cards">
                     <div class="card-icon instagram-icon">

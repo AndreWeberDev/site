@@ -2,9 +2,33 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
+const JWT_SECRET = process.env.JWT_SECRET || 'seu-jwt-secret-aqui';
+
+const db = new sqlite3.Database(':memory:');
+
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      is_admin BOOLEAN DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  
+  const adminPassword = bcrypt.hashSync('Naui2742', 10);
+  db.run(`
+    INSERT INTO users (name, email, password, is_admin)
+    VALUES (?, ?, ?, ?)
+  `, ['André Junior', 'andre@admin.com', adminPassword, 1]);
+});
 const PORT = process.env.PORT || 5487;
 
 // Middleware
@@ -14,7 +38,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 
-// 4. ROTA DE CADASTRO
 app.post('/api/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -47,24 +70,6 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// ROTA PARA SIMULAR ENVIO DE EMAIL 2FA
-app.post('/api/send-2fa-email', async (req, res) => {
-  try {
-    const { email, code } = req.body;
-    
-    // Simular envio bem-sucedido
-    console.log(`📧 Email 2FA enviado para: ${email}`);
-    console.log(`🔐 Código: ${code}`);
-    
-    res.json({ success: true, message: 'Email enviado com sucesso!' });
-    
-  } catch (error) {
-    console.error('Erro:', error);
-    res.status(500).json({ success: false, error: 'Falha no envio do email' });
-  }
-});
-
-// 5. ROTA DE LOGIN
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
   

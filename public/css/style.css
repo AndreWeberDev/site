@@ -1162,3 +1162,141 @@ footer {
     min-width: 140px;
   }
 }
+/* Estilos para avisos de acesso restrito */
+.auth-notice {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 30px;
+  background: rgba(26, 26, 46, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(138, 180, 248, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.auth-notice h2 {
+  color: #8ab4f8;
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.auth-notice p {
+  color: #e8eaed;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.notice-subtitle {
+  color: #9aa0a6 !important;
+  font-size: 14px !important;
+  font-style: italic;
+  margin-bottom: 30px !important;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.btn-login, .btn-register {
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-login {
+  background: linear-gradient(135deg, #4285f4, #8ab4f8);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.btn-login:hover {
+  background: linear-gradient(135deg, #5a95f5, #9bc5f9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
+}
+
+.btn-register {
+  background: transparent;
+  color: #8ab4f8;
+  border: 2px solid #8ab4f8;
+}
+
+.btn-register:hover {
+  background: rgba(138, 180, 248, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(138, 180, 248, 0.3);
+}
+
+.back-link {
+  margin-top: 20px !important;
+  margin-bottom: 0 !important;
+}
+
+.back-link a {
+  color: #9aa0a6;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.back-link a:hover {
+  color: #8ab4f8;
+}
+
+/* Responsividade para avisos de acesso */
+@media (max-width: 768px) {
+  .auth-notice {
+    padding: 30px 20px;
+    margin: 0 15px;
+  }
+  
+  .auth-notice h2 {
+    font-size: 1.5rem;
+  }
+  
+  .auth-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn-login, .btn-register {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-notice {
+    padding: 25px 15px;
+  }
+  
+  .auth-notice h2 {
+    font-size: 1.3rem;
+  }
+  
+  .auth-notice p {
+    font-size: 15px;
+  }
+  
+  .notice-subtitle {
+    font-size: 13px !important;
+  }
+}

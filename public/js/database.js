@@ -295,6 +295,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Atualizar referência global para compatibilidade
     window.auth = persistentAuth;
     
+    // Disparar evento personalizado quando auth estiver pronto
+    window.dispatchEvent(new CustomEvent('authReady'));
+    
     // Atualizar sidebar se usuário estiver logado
     if (typeof updateSidebar === 'function') {
       updateSidebar();
@@ -302,6 +305,18 @@ document.addEventListener('DOMContentLoaded', async function() {
   } catch (error) {
     console.error('Erro ao inicializar banco de dados:', error);
     // Fallback para localStorage se IndexedDB falhar
-    window.auth = new AuthSystem();
+    if (typeof AuthSystem !== 'undefined') {
+      window.auth = new AuthSystem();
+    } else {
+      // Sistema básico de fallback
+      window.auth = {
+        isLoggedIn: () => !!localStorage.getItem('currentUser'),
+        isAdmin: () => {
+          const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+          return user.isAdmin || false;
+        }
+      };
+    }
+    window.dispatchEvent(new CustomEvent('authReady'));
   }
 });

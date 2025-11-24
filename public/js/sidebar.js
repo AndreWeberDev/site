@@ -10,9 +10,9 @@ function updateSidebar() {
   const isAdmin = auth && auth.isAdmin();
   
   // Animação de saída mais suave
-  sidebarNav.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-  sidebarNav.style.opacity = '0';
-  sidebarNav.style.transform = 'translateX(-20px)';
+  sidebarNav.style.transition = 'all 0.2s ease';
+  sidebarNav.style.opacity = '0.7';
+  sidebarNav.style.transform = 'translateX(-10px)';
   
   setTimeout(() => {
     // Obter caminho atual de forma mais robusta
@@ -91,7 +91,7 @@ function updateSidebar() {
     sidebarNav.appendChild(configLink);
     
     // Animação de entrada
-    sidebarNav.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    sidebarNav.style.transition = 'all 0.3s ease';
     sidebarNav.style.opacity = '1';
     sidebarNav.style.transform = 'translateX(0)';
     
@@ -274,7 +274,7 @@ function toggleSidebar() {
   
   if (isActive) {
     // Fechar sidebar com animação
-    sidebar.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    sidebar.style.transition = 'transform 0.3s ease';
     sidebar.classList.remove('active');
     sidebar.classList.add('hidden');
     overlay.classList.remove('active');
@@ -283,10 +283,10 @@ function toggleSidebar() {
     
     setTimeout(() => {
       toggleBtn.style.transform = 'scale(1)';
-    }, 200);
+    }, 150);
   } else {
     // Abrir sidebar com animação
-    sidebar.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    sidebar.style.transition = 'transform 0.3s ease';
     sidebar.classList.remove('hidden');
     sidebar.classList.add('active');
     overlay.classList.add('active');
@@ -295,7 +295,7 @@ function toggleSidebar() {
     
     setTimeout(() => {
       toggleBtn.style.transform = 'scale(1)';
-    }, 200);
+    }, 150);
   }
 }
 

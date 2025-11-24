@@ -1,146 +1,124 @@
-# Changelog - Sistema Administrativo Melhorado
-
-## [2.0.0] - 2025-01-27
-
-### ✨ Novas Funcionalidades
-
-#### Sistema de Abas
-- Interface organizada em 3 seções: Projetos, Contatos e Configurações
-- Navegação fluida entre seções com animações
-
-#### Gerenciamento de Projetos Aprimorado
-- Formulário com categorização (Web, Game, Mobile, Outros)
-- Campo para tecnologias utilizadas
-- Seleção de categoria com ícones visuais
-- Cards visuais para exibição dos projetos
-- Botões de edição e exclusão
-
-#### Sistema de Contatos Completo
-- Gerenciamento de contatos profissionais
-- Tipos: Email, Telefone, Rede Social, Profissional
-- Controle de visibilidade (público/privado)
-- Formatação automática de links e contatos
-- Ícones personalizáveis
-
-#### Configurações do Site
-- Personalização de informações básicas
-- Configuração de tema
-- Backup e restauração de dados
-
-#### Sistema de Notificações
-- Notificações visuais para todas as ações
-- Tipos: sucesso, erro, aviso, informação
-- Auto-dismiss após 5 segundos
-- Design moderno com backdrop blur
-
-#### Ferramentas Administrativas
-- Exportação de dados em JSON
-- Importação de backup
-- Estatísticas do portfolio
-- Limpeza completa de dados
-
-### 🎨 Melhorias de Interface
-
-#### Design Moderno
-- Tema escuro consistente
-- Gradientes e efeitos de blur
-- Animações suaves em hover
-- Cards com elevação visual
-
-#### Responsividade
-- Layout adaptativo para mobile
-- Grid responsivo para projetos e contatos
-- Formulários otimizados para touch
-
-#### Acessibilidade
-- Contraste adequado de cores
-- Feedback visual para todas as ações
-- Navegação por teclado
-
-### 🔧 Melhorias Técnicas
-
-#### Arquitetura de Código
-- Classes organizadas (ProjectManager, ContactManager)
-- Separação de responsabilidades
-- Funções auxiliares modulares
-- Sistema de helpers reutilizáveis
-
-#### Gerenciamento de Estado
-- LocalStorage organizado por prefixos
-- Validação de dados de entrada
-- Tratamento de erros robusto
-
-#### Performance
-- Renderização eficiente com map()
-- Lazy loading de dados
-- Otimização de animações CSS
-
-### 📚 Aspectos Educacionais
-
-#### Conceitos Demonstrados
-- Classes e POO em JavaScript
-- Manipulação do DOM moderna
-- Event handling profissional
-- LocalStorage avançado
-- CSS Grid e Flexbox
-- Animações CSS performáticas
-
-#### Boas Práticas
-- Código comentado e documentado
-- Funções pequenas e focadas
-- Nomenclatura clara e consistente
-- Separação de concerns
-- Tratamento de edge cases
-
-### 🚀 Próximas Melhorias Planejadas
-
-- Sistema de edição inline
-- Upload de imagens
-- Integração com APIs externas
-- Sistema de templates
-- Modo de visualização prévia
-
----
-
-**Desenvolvido como material educativo para ensino de programação web moderna.**
 # Changelog
 
-## [2025-01-27] - Sistema 2FA Real Ativado
+## [2025-01-27] - Remoção do Sistema 2FA e Correções Gerais
 
-### Adicionado
-- Integração real de envio de email para códigos 2FA usando nodemailer
-- Rota `/api/send-2fa-email` no servidor para processar envios de email
-- Template HTML profissional para emails de verificação 2FA
-- Configuração de transporter nodemailer com Gmail
-- Arquivo `.env` para configuração segura de credenciais de email
-- Dependência nodemailer no package.json
+### Sistema 2FA Removido
+- Removido arquivo public/js/two-factor.js contendo classe TwoFactorAuth
+- Removido arquivo public/js/simple-2fa.js com sistema simplificado
+- Removido arquivo public/js/email-service.js com configuração de email
+- Removido arquivo public/js/sms-service.js para envio de SMS
+- Removido arquivo public/js/auth-2fa.js com integração de autenticação
+- Removido arquivo public/css/two-factor.css com estilos do sistema
+- Removido arquivo public/verify-email.html para verificação de email
+- Removido arquivo server/.env com configurações de email
+- Removida dependência nodemailer do package.json
+- Removida rota /api/send-2fa-email do servidor
 
-### Modificado
-- Função `sendCode()` em `two-factor.js` agora faz chamada real à API de email
-- Sistema de fallback mantido caso o envio de email falhe
-- Servidor configurado para usar `noreply@andrejunior.com` como remetente
+### Correções no Sistema de Login
+- Corrigido redirecionamento após login em auth.js linha 142
+- Alterado window.location.href para usar paths relativos ./index.html e ./admin.html
+- Removida variável rememberMe não utilizada
+- Mantido sistema de fallback entre banco SQLite e localStorage
 
-### Técnico
-- Substituído sistema de demonstração por envio real de emails
-- Mantida compatibilidade com sistema de códigos temporários existente
-- Adicionado tratamento de erros para falhas no envio de email
-- Template de email responsivo com design profissional
+### Otimizações de Animações
+- Reduzidas transições CSS de 0.8s para 0.6s em auth.css linha 847
+- Alteradas animações de sidebar de 0.4s para 0.3s em sidebar.js linha 15
+- Otimizadas animações de entrada de 0.4s para 0.3s em sidebar.js linha 85
+- Reduzidos timeouts de animação de 200ms para 150ms em sidebar.js linha 298
 
-### Próximos Passos
-- Configurar senha de aplicativo do Gmail no arquivo .env
-- Testar envio real de emails 2FA
-- Instalar dependência nodemailer com `npm install`
+### Melhorias para Dispositivos Móveis
+- Adicionado padding responsivo em auth.css linha 901
+- Corrigidas animações de input focus de translateY(-3px) para translateY(-2px)
+- Removidos efeitos de partículas em telas menores que 768px
+- Desabilitado auth-form::before em dispositivos móveis
+- Otimizadas transições de botão hover para scale(1.01) em mobile
 
-## [2025-01-27] - Sistema 2FA Simplificado
+### Correções na Sidebar
+- Corrigido método de detecção de página ativa em sidebar.js linha 22
+- Melhorado sistema de fechamento automático da sidebar
+- Otimizadas animações de ripple effect nos itens de menu
+- Corrigida função closeSidebarOnNavigation para usar transições mais rápidas
 
-### Modificado
-- Sistema 2FA agora funciona sem dependências externas
-- Código aparece em popup na tela em vez de email
-- Removido nodemailer e configurações complexas
-- Mantida toda funcionalidade de segurança (expiração, tentativas limitadas)
+### Limpeza de Código
+- Removidos comentários excessivos de todos os arquivos JavaScript
+- Simplificadas funções de animação em auth.js
+- Otimizada estrutura de classes CSS para melhor performance
+- Removidas dependências não utilizadas do servidor
 
-### Técnico
-- Criado `simple-2fa.js` para sistema independente
-- Simplificado `two-factor.js` para usar popup visual
-- Removido nodemailer do package.json
-- Sistema funciona imediatamente sem configuração
+### Documentação
+- Criado README.md com estrutura completa do projeto
+- Documentadas todas as tecnologias utilizadas
+- Incluídas instruções de instalação e configuração
+- Adicionadas informações de arquitetura e segurança
+
+### Servidor
+- Removida configuração de transporter nodemailer
+- Simplificada estrutura de rotas da API
+- Mantido sistema híbrido SQLite com fallback localStorage
+- Corrigidas importações desnecessárias
+
+## [2025-01-27] - Correção de Bugs Críticos no Sistema de Autenticação
+
+### Bugs Críticos Corrigidos
+- Corrigidas dependências faltantes no servidor (bcrypt, jwt, sqlite3)
+- Adicionada inicialização correta do banco SQLite em memória
+- Corrigida função async sem await no formulário de cadastro
+- Implementado timeout de 3 segundos na função testConnection
+- Corrigida detecção de servidor online/offline
+
+### Melhorias de Segurança
+- Adicionada validação robusta de entrada de dados
+- Implementada normalização de email (toLowerCase e trim)
+- Adicionada validação de tamanho máximo de senha (128 caracteres)
+- Melhorada validação de formato de email com regex
+- Removidos logs de senha em produção
+
+### Correções de Interface
+- Corrigida ordem de carregamento de scripts em login.html e register.html
+- Removidas referências a arquivos inexistentes (two-factor.js, auth-2fa.js)
+- Melhorado tratamento de erros de conexão com o servidor
+- Adicionado controle de timeout para requisições HTTP
+
+### Sistema de Banco de Dados
+- Corrigida inicialização automática do usuário admin
+- Implementado sistema híbrido mais confiável
+- Melhorada detecção de falhas de conexão
+- Adicionada validação de tipos de dados de entrada
+
+### Validações Implementadas
+- Validação de campos obrigatórios em cadastro e login
+- Verificação de formato de email válido
+- Validação de tamanho mínimo e máximo de campos
+- Sanitização de dados de entrada (trim, toLowerCase)
+- Prevenção de injeção de dados maliciosos
+## [2025-01-27] - Correção de Acesso às Páginas Protegidas e Melhorias de UX
+
+### Bugs Críticos Corrigidos
+- Corrigida race condition que impedia usuários logados de acessar páginas de portfólio e contatos
+- Implementado sistema de eventos personalizados para aguardar inicialização do auth
+- Corrigida verificação de autenticação que executava antes do sistema estar pronto
+- Adicionado fallback robusto caso o sistema de auth falhe na inicialização
+
+### Melhorias de Interface para Novos Usuários
+- Criadas interfaces atrativas para páginas de acesso restrito
+- Adicionados botões de login E cadastro nas páginas protegidas
+- Implementadas mensagens explicativas sobre a necessidade de conta
+- Adicionados ícones e design moderno para avisos de acesso restrito
+
+### Sistema de Autenticação Aprimorado
+- Implementado evento 'authReady' para sincronização correta
+- Melhorada detecção de estado de login em todas as páginas
+- Adicionado sistema de fallback triplo (IndexedDB → localStorage → básico)
+- Corrigida inicialização assíncrona do sistema de autenticação
+
+### Estilos CSS Adicionados
+- Criados estilos responsivos para avisos de acesso restrito
+- Implementados botões diferenciados para login e cadastro
+- Adicionadas animações suaves para melhor experiência
+- Otimizada responsividade para dispositivos móveis
+
+### Correções de Funcionalidade
+- Corrigida exibição de conteúdo em páginas de contatos e projetos
+- Melhorada detecção de páginas ativas no sistema de navegação
+- Implementada verificação robusta de elementos DOM antes de manipulação
+- Adicionado tratamento de erro para casos de JavaScript desabilitado

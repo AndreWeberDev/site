@@ -145,15 +145,24 @@ function mostrarNotificacao(mensagem, tipo) {
     }, 3000);
 }
 
-// Inicialização quando a página carrega
-document.addEventListener('DOMContentLoaded', function() {
-    // Verificar autenticação nas páginas protegidas
+// Aguardar sistema de autenticação estar pronto
+function initializePageContent() {
     if (window.location.pathname.includes('contatos.html')) {
         checkContactsAuth();
     } else if (window.location.pathname.includes('meusProjetos.html')) {
         checkProjectsAuth();
     } else {
         carregarProjetos();
+    }
+}
+
+// Inicialização quando a página carrega
+document.addEventListener('DOMContentLoaded', function() {
+    // Aguardar evento de auth pronto
+    if (window.auth) {
+        initializePageContent();
+    } else {
+        window.addEventListener('authReady', initializePageContent);
     }
     
     const formProjeto = document.getElementById('form-projeto');
@@ -167,7 +176,11 @@ function checkContactsAuth() {
     const loginRequired = document.getElementById('loginRequired');
     const contactsContent = document.getElementById('contactsContent');
     
-    if (auth.isLoggedIn()) {
+    if (!loginRequired || !contactsContent) return;
+    
+    const isLoggedIn = window.auth && typeof auth.isLoggedIn === 'function' && auth.isLoggedIn();
+    
+    if (isLoggedIn) {
         loginRequired.style.display = 'none';
         contactsContent.style.display = 'block';
     } else {
@@ -181,7 +194,11 @@ function checkProjectsAuth() {
     const loginRequired = document.getElementById('loginRequired');
     const projectsContent = document.getElementById('projectsContent');
     
-    if (auth.isLoggedIn()) {
+    if (!loginRequired || !projectsContent) return;
+    
+    const isLoggedIn = window.auth && typeof auth.isLoggedIn === 'function' && auth.isLoggedIn();
+    
+    if (isLoggedIn) {
         loginRequired.style.display = 'none';
         projectsContent.style.display = 'block';
         loadProjectsFromStorage();

@@ -39,12 +39,20 @@ class AuthSystem {
   }
 
   validatePassword(password) {
+    if (!password || typeof password !== 'string') {
+      throw new Error('Senha é obrigatória');
+    }
+    
     const hasUpperCase = /[A-Z]/.test(password);
     const hasSpecialChar = /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
     const minLength = password.length >= 8;
+    const maxLength = password.length <= 128;
     
     if (!minLength) {
       throw new Error('Senha deve ter pelo menos 8 caracteres');
+    }
+    if (!maxLength) {
+      throw new Error('Senha deve ter no máximo 128 caracteres');
     }
     if (!hasUpperCase) {
       throw new Error('Senha deve ter pelo menos 1 letra maiúscula');
@@ -73,6 +81,19 @@ class AuthSystem {
   }
 
   register(name, email, password) {
+    if (!name || !email || !password) {
+      throw new Error('Todos os campos são obrigatórios');
+    }
+    
+    if (typeof name !== 'string' || name.trim().length < 2) {
+      throw new Error('Nome deve ter pelo menos 2 caracteres');
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      throw new Error('Email inválido');
+    }
+    
     if (this.users.find(user => user.email === email)) {
       throw new Error('Email já cadastrado');
     }
@@ -81,11 +102,11 @@ class AuthSystem {
 
     const user = {
       id: Date.now(),
-      name,
-      email,
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
       password,
       isAdmin: false,
-      verified: true // Simplificando - verificação automática
+      verified: true
     };
 
     this.users.push(user);
@@ -95,15 +116,21 @@ class AuthSystem {
   }
 
   login(email, password) {
-    console.log('Tentativa de login:', { email, password });
-    console.log('Usuários disponíveis:', this.users);
+    if (!email || !password) {
+      throw new Error('Email e senha são obrigatórios');
+    }
     
-    const user = this.users.find(u => u.email === email && u.password === password);
-    console.log('Usuário encontrado:', user);
+    if (typeof email !== 'string' || typeof password !== 'string') {
+      throw new Error('Dados inválidos');
+    }
+    
+    console.log('Tentativa de login:', { email });
+    
+    const normalizedEmail = email.toLowerCase().trim();
+    const user = this.users.find(u => u.email === normalizedEmail && u.password === password);
     
     if (!user) {
-      // Verificar se o email existe
-      const emailExists = this.users.find(u => u.email === email);
+      const emailExists = this.users.find(u => u.email === normalizedEmail);
       if (emailExists) {
         throw new Error('Senha incorreta');
       } else {
@@ -117,7 +144,7 @@ class AuthSystem {
 
     this.currentUser = user;
     localStorage.setItem('currentUser', JSON.stringify(user));
-    console.log('Login bem-sucedido:', user);
+    console.log('Login bem-sucedido');
     return user;
   }
 
@@ -199,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Pequeno delay para mostrar o loading
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        const rememberMe = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : false;
         // Tentar usar banco real primeiro
         let user;
         try {
@@ -256,10 +282,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof refreshSidebar === 'function') {
               refreshSidebar();
             }
-            if (user.isAdmin) {
-              window.location.href = 'admin.html';
+            // Redirecionamento corrigido
+            if (user && user.isAdmin) {
+              window.location.href = './admin.html';
             } else {
-              window.location.href = 'index.html';
+              window.location.href = './index.html';
             }
           }, 400);
         }, 1200);
@@ -292,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   if (registerForm) {
-    registerForm.addEventListener('submit', function(e) {
+    registerForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
@@ -301,7 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const submitButton = registerForm.querySelector('button[type="submit"]');
 
       if (password !== confirmPassword) {
-        // Animação de erro para senhas diferentes
         const passwordFields = [document.getElementById('password'), document.getElementById('confirmPassword')];
         passwordFields.forEach(field => {
           field.style.border = '2px solid #e74c3c';
@@ -317,12 +343,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       try {
-        // Animação de loading
         submitButton.textContent = 'Cadastrando...';
         submitButton.disabled = true;
         submitButton.style.background = 'linear-gradient(135deg, #9aa0a6, #666)';
         
-        // Tentar usar banco real primeiro
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
         try {
           const response = await fetch('http://localhost:5487/api/register', {
             method: 'POST',
@@ -337,7 +363,6 @@ document.addEventListener('DOMContentLoaded', function() {
             throw new Error(error.error);
           }
         } catch (error) {
-          // Fallback para localStorage
           auth.register(name, email, password);
           console.log('⚠️ Usando localStorage como backup');
         }
