@@ -147,22 +147,35 @@ function mostrarNotificacao(mensagem, tipo) {
 
 // Aguardar sistema de autenticação estar pronto
 function initializePageContent() {
-    if (window.location.pathname.includes('contatos.html')) {
-        checkContactsAuth();
-    } else if (window.location.pathname.includes('meusProjetos.html')) {
-        checkProjectsAuth();
-    } else {
-        carregarProjetos();
-    }
+    // Forçar verificação após pequeno delay
+    setTimeout(() => {
+        if (window.location.pathname.includes('contatos.html')) {
+            checkContactsAuth();
+        } else if (window.location.pathname.includes('meusProjetos.html')) {
+            checkProjectsAuth();
+        } else {
+            carregarProjetos();
+        }
+    }, 50);
 }
 
 // Inicialização quando a página carrega
 document.addEventListener('DOMContentLoaded', function() {
+    // Sempre mostrar aviso por padrão primeiro
+    if (window.location.pathname.includes('contatos.html') || window.location.pathname.includes('meusProjetos.html')) {
+        const loginRequired = document.getElementById('loginRequired');
+        if (loginRequired) {
+            loginRequired.style.display = 'block';
+        }
+    }
+    
     // Aguardar evento de auth pronto
     if (window.auth) {
         initializePageContent();
     } else {
         window.addEventListener('authReady', initializePageContent);
+        // Fallback caso o evento não dispare
+        setTimeout(initializePageContent, 300);
     }
     
     const formProjeto = document.getElementById('form-projeto');
@@ -176,9 +189,21 @@ function checkContactsAuth() {
     const loginRequired = document.getElementById('loginRequired');
     const contactsContent = document.getElementById('contactsContent');
     
-    if (!loginRequired || !contactsContent) return;
+    if (!loginRequired || !contactsContent) {
+        console.log('Elementos não encontrados na página de contatos');
+        return;
+    }
     
-    const isLoggedIn = window.auth && typeof auth.isLoggedIn === 'function' && auth.isLoggedIn();
+    let isLoggedIn = false;
+    
+    try {
+        isLoggedIn = window.auth && typeof auth.isLoggedIn === 'function' && auth.isLoggedIn();
+    } catch (error) {
+        console.log('Erro ao verificar login:', error);
+        isLoggedIn = false;
+    }
+    
+    console.log('Status de login (contatos):', isLoggedIn);
     
     if (isLoggedIn) {
         loginRequired.style.display = 'none';
@@ -194,9 +219,21 @@ function checkProjectsAuth() {
     const loginRequired = document.getElementById('loginRequired');
     const projectsContent = document.getElementById('projectsContent');
     
-    if (!loginRequired || !projectsContent) return;
+    if (!loginRequired || !projectsContent) {
+        console.log('Elementos não encontrados na página de projetos');
+        return;
+    }
     
-    const isLoggedIn = window.auth && typeof auth.isLoggedIn === 'function' && auth.isLoggedIn();
+    let isLoggedIn = false;
+    
+    try {
+        isLoggedIn = window.auth && typeof auth.isLoggedIn === 'function' && auth.isLoggedIn();
+    } catch (error) {
+        console.log('Erro ao verificar login:', error);
+        isLoggedIn = false;
+    }
+    
+    console.log('Status de login (projetos):', isLoggedIn);
     
     if (isLoggedIn) {
         loginRequired.style.display = 'none';

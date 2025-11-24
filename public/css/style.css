@@ -504,11 +504,18 @@ main section.social {
 
 /* Estilos para páginas protegidas */
 .login-required {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
   text-align: center;
   padding: 40px 20px;
-  background: rgba(26, 26, 46, 0.8);
+  background: rgba(26, 26, 46, 0.95);
   border-radius: 12px;
   border: 1px solid rgba(138, 180, 248, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
 .login-required h2 {
@@ -1298,5 +1305,51 @@ footer {
   
   .notice-subtitle {
     font-size: 13px !important;
+  }
+}
+/* Efeito de blur no fundo para simular conteúdo oculto */
+.projects-content, .contacts-content {
+  position: relative;
+}
+
+.projects-content::before, .contacts-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 15, 35, 0.3);
+  backdrop-filter: blur(8px);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.auth-notice {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 30px;
+  background: rgba(26, 26, 46, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(138, 180, 248, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+}
+
+/* Ajustar main para posicionamento relativo */
+main {
+  position: relative;
+  min-height: 60vh;
+}
+
+@media (max-width: 768px) {
+  .login-required {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
   }
 }

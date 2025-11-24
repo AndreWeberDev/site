@@ -122,3 +122,35 @@
 - Melhorada detecção de páginas ativas no sistema de navegação
 - Implementada verificação robusta de elementos DOM antes de manipulação
 - Adicionado tratamento de erro para casos de JavaScript desabilitado
+## [2025-01-27] - Correção Crítica de Exibição de Avisos de Login
+
+### Bugs Críticos Corrigidos
+- Corrigido conteúdo de contatos sendo exibido para usuários não logados
+- Forçada exibição do aviso de login por padrão em páginas protegidas
+- Implementado fallback adicional para garantir verificação de autenticação
+- Adicionados logs de debug para identificar problemas de inicialização
+
+### Melhorias de Segurança
+- Conteúdo protegido agora fica oculto por padrão até verificação de login
+- Implementada verificação dupla de autenticação com tratamento de erro
+- Adicionado timeout de segurança para casos de falha na inicialização
+- Melhorada lógica de exibição para prevenir vazamento de conteúdo
+
+### Correções de Interface
+- Avisos de login agora aparecem corretamente em todas as páginas protegidas
+- Melhorada sincronização entre sistema de auth e interface do usuário
+- Implementada exibição forçada de avisos antes da verificação de login
+- Corrigida ordem de execução para garantir segurança do conteúdo
+## [2025-01-27] - Melhorias Visuais nos Avisos de Acesso Restrito
+
+### Melhorias de Interface
+- Centralizados avisos de login no meio da página
+- Adicionado efeito de blur no fundo para simular conteúdo oculto
+- Implementado posicionamento absoluto para melhor experiência visual
+- Melhorada responsividade para dispositivos móveis com posicionamento fixo
+
+### Efeitos Visuais
+- Backdrop-filter blur aplicado aos avisos para maior destaque
+- Overlay com blur no conteúdo protegido para criar sensação de conteúdo oculto
+- Sombras aprimoradas para melhor profundidade visual
+- Ajustado z-index para garantir sobreposição correta dos elementos
